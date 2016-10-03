@@ -1,0 +1,84 @@
+// |++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// |
+// | Reset
+// |++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, a, address, em, img,strong, dl, dt, dd, li, fieldset, form, label, legend {
+  border: 0;
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+}
+
+:focus {
+  outline: 0 !important;
+}
+
+img {
+  vertical-align: middle;
+  -ms-interpolation-mode: bicubic;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+a {
+  &:link,
+  &:visited,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:link,
+  &:visited {
+    color: #000;
+  }
+}
+
+
+::-webkit-file-upload-button {
+  cursor:pointer;
+}
+* {
+  -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+      box-sizing: border-box;
+}
+*:before,
+*:after {
+ -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+     box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+a,
+button,
+input[type="submit"] {
+  &:focus, &:active {
+    box-shadow: none !important;
+  }
+}
+
+html {
+  height: 100%;
+}
+body {
+  background-color: #F3F5F7;
+  color: $color-text;
+  font-family: $font-family-text;
+  font-size: $font-size-text;
+  font-weight: $font-normal;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+body > div {
+ height: 100%
+}

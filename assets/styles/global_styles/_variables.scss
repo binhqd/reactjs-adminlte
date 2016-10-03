@@ -1,0 +1,43 @@
+// |++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// |
+// | Variables
+// |++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Path
+$image-url: "assets/images" !default;
+$font-url: "assets/fonts" !default; // Width & Height
+$width-container: 970px !default;
+$height-footer: 150px !default; // Color
+$color-white: #fff !default;
+$color-grey: #9B9B9B !default;
+$color-grey-light: #666 !default;
+$color-black: #000 !default;
+$color-dark: #333 !default;
+$color-text: #4a4a4a !default;
+$color-grey-dark: #303135 !default;
+$color-violet: #d0b6ef !default;
+$color-violet-dark: #9144D2 !default;
+$color-yellow-dark: #EACA56 !default;
+$color-pink-dark: #e87fb5 !default;
+$color-border: #e6e6e6 !default;
+$color-bg-grey: #ececec !default;
+$color-green: #78CC1B !default;
+$color-orange: #E97C05 !default;
+$color-facebook: #3855A0 !default;
+/************** Font *******/
+$font-special: 'Arapey', serif;
+$font-family-headline: 'Josefin Sans', Helvetica,Arial, sans-serif !default;
+$font-family-text: 'Josefin Sans', Helvetica,Arial, sans-serif !default;
+$font-size-headline: 30px !default;
+$font-size-text: 14px !default;
+$font-light: 300 !default;
+$font-normal: 400 !default;
+$font-semibold-headline: 600 !default;
+$font-semibold: 600 !default;
+$font-bold: 700 !default;
+/********* Breakpoints **************/
+$desktop: "(max-width: 1200px)" !default;
+$tablet: "(max-width: 992px)" !default;
+$phone: "(max-width: 768px)" !default;
+$smallphone: "(max-width: 480px)" !default;
+$extra-smallphone: "(max-width: 350px)" !default;
+$height-header-mobile: 72px !default;

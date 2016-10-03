@@ -1,0 +1,19 @@
+/****************** title *******************/
+.main-title {
+  @include transition(all 0.3s ease);
+}
+
+.title-b24 {
+  @include rem("font-size", 24);
+  @include rem("line-height", 29);
+  font-weight: $font-bold;
+  text-transform: uppercase;
+}
+
+.title-21 {
+  color: $color-dark;
+  @include rem("font-size", 21);
+  @include rem("line-height", 29);
+  font-weight: $font-bold;
+}
+/****************** title .end *************/

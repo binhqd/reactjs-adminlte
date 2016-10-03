@@ -1,0 +1,31 @@
+<div>
+   <header className="header">
+      <h1>todos</h1>
+      <input className="new-todo" type="text" placeholder="What needs to be done?" value=""/>
+   </header>
+   <section className="main">
+      <input className="toggle-all" type="checkbox"/>
+      <ul className="todo-list">
+         <li className="">
+            <div className="view">
+              <input className="toggle" type="checkbox"/>
+              <label>Use Redux</label>
+              <button className="destroy"></button>
+            </div>
+         </li>
+      </ul>
+      <footer className="footer">
+         <span className="todo-count">
+           <strong>1</strong>
+           <span> </span>
+           <span>item</span>
+           <span> left</span>
+         </span>
+         <ul className="filters">
+            <li><a className="selected">All</a></li>
+            <li><a className="">Active</a></li>
+            <li><a className="">Completed</a></li>
+         </ul>
+      </footer>
+   </section>
+</div>

@@ -1,0 +1,58 @@
+@import "assets/styles/global_styles/variables";
+@import "assets/styles/global_styles/mixins";
+@import "assets/styles/global_styles/icons";
+
+.notification-popup {
+  padding: 15px 40px;
+  position: fixed;
+  text-align: center;
+  top: 100px;
+  width: 100%;
+  z-index: 30;
+
+  .btn-close {
+    background-color: transparent;
+    border: 0 none transparent;
+    color: transparent;
+    font-size: 0;
+    display: inline-block;
+    height: 20px;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+
+    &:before {
+      content: "\e905";
+      color: $color-black;
+      font-family: 'icomoon' !important;
+      @include rem("font-size", 18);
+      @include rem("line-height", 32);
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+
+    &:hover {
+      &:before {
+        color: $color-grey;
+      }
+    }
+  }
+
+  .content-popup {
+    background-color: rgba($color-white, 0.95);
+    @include border-radius(5px);
+    color: $color-black;
+    @include rem("font-size", 18);
+    @include rem("line-height", 25);
+    font-weight: $font-bold;
+    padding: 30px;
+    position: relative;
+  }
+
+  .show {
+    display: block;
+  }
+}

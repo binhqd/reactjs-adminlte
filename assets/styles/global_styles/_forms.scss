@@ -1,0 +1,99 @@
+/****************** form *******************/
+.auth-main-form {
+  padding: 30px 30px 65px;
+  position: relative;
+
+  .top-group-btn {
+    padding-bottom: 6px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .control-label {
+    @include rem("font-size", 19);
+    @include rem("line-height", 21px);
+    font-size: $font-normal;
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    @include rem("font-size", 19);
+    @include rem("line-height", 21px);
+    height: 43px;
+    @include box-shadow(none);
+  }
+
+  .input-col-50 {
+    float: left;
+    width: 50%;
+
+    &:first-child {
+      padding-right: 10px;
+    }
+
+    &:not(:first-child) {
+      padding-left: 10px;
+    }
+  }
+
+  .description-form-right {
+    @include rem("font-size", 16);
+    @include rem("line-height", 21px);
+    text-align: right;
+
+    .txt-dark-link {
+      color: $color-dark;
+      text-decoration: underline;
+      @include min-breakpoint(1024) {
+        &:hover {
+          color: $color-violet-dark;
+        }
+      }
+    }
+  }
+
+  .description-form {
+    color: $color-grey-light;
+    @include rem("font-size", 16);
+    @include rem("line-height", 21px);
+
+    .text-violet-link {
+      color: $color-violet-dark;
+      font-weight: $font-semibold;
+      @include min-breakpoint(1024) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &.has-margin-bottom {
+      margin-bottom: 25px;
+    }
+  }
+
+  .footer-group {
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  &.signin-facebook-form {
+    padding: 0 15px 60px;
+
+    .button-group {
+      text-align: center;
+    }
+  }
+}
+
+.form-content {
+  background-color: $color-white;
+  @include border-radius(5px);
+  overflow: hidden;
+}
+/****************** form .end *************/

@@ -1,0 +1,207 @@
+/*********** button ***************/
+.btn-line,
+a.btn-line {
+  background-color: transparent;
+  border: 0 none transparent;
+  padding: 0;
+  @include min-breakpoint(1024) {
+    &:hover {}
+  }
+
+  &:focus,
+  &:hover {}
+}
+
+.btn-violet-18,
+a.btn-violet-18 {
+  background-color: $color-violet-dark;
+  border: 0 none transparent;
+  @include rem("border-radius", 5);
+  color: $color-white;
+  display: inline-block;
+  @include rem("font-size", 18);
+  @include rem("line-height", 25);
+  font-weight: $font-bold;
+  height: 42px;
+  min-width: 143px;
+  padding: 8px 10px;
+  text-align: center;
+  text-transform: capitalize;
+  @include transition(all 0.3s ease 0s);
+  @include min-breakpoint(1024) {
+    &:hover {
+      background-color: darken($color-violet-dark,8%);
+      color: $color-white;
+    }
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-violet-dark;
+    color: $color-white;
+  }
+}
+
+.btn-violet-full-21,
+a.btn-violet-full-21 {
+  background-color: $color-violet-dark;
+  border: 0 none transparent;
+  @include rem("border-radius", 0);
+  color: $color-white;
+  display: inline-block;
+  @include rem("font-size", 21);
+  @include rem("line-height", 27);
+  font-weight: $font-bold;
+  height: 53px;
+  min-width: 143px;
+  padding: 5px 10px;
+  text-align: center;
+  @include transition(all 0.3s ease 0s);
+  width: 100%;
+  @include min-breakpoint(1024) {
+    &:hover {
+      background-color: darken($color-violet-dark,8%);
+      color: $color-white;
+    }
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-violet-dark;
+    color: $color-white;
+  }
+}
+
+.btn-green-20,
+a.btn-green-20 {
+  background-color: $color-green;
+  border: 0 none transparent;
+  @include rem("border-radius", 5);
+  color: $color-white;
+  display: inline-block;
+  @include rem("font-size", 20);
+  @include rem("line-height", 29);
+  font-weight: $font-bold;
+  height: 44px;
+  min-width: 143px;
+  padding: 6px 10px;
+  text-align: center;
+  text-transform: capitalize;
+  @include transition(all 0.3s ease 0s);
+  @include min-breakpoint(1024) {
+    &:hover {
+      background-color: darken($color-green, 10%);
+      color: $color-white;
+    }
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-green;
+    color: $color-white;
+  }
+}
+
+.btn-green-12,
+a.btn-green-12 {
+  background-color: $color-green;
+  border: 0 none transparent;
+  @include rem("border-radius", 5);
+  color: $color-white;
+  display: inline-block;
+  @include rem("font-size", 12);
+  @include rem("line-height", 19);
+  height: 30px;
+  min-width: 105px;
+  padding: 4px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  @include transition(all 0.3s ease 0s);
+  @include min-breakpoint(1024) {
+    &:hover {
+      background-color: darken($color-green, 10%);
+      color: $color-white;
+    }
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-green;
+    color: $color-white;
+  }
+}
+
+.btn-orange-12,
+a.btn-orange-12 {
+  background-color: $color-orange;
+  border: 0 none transparent;
+  @include rem("border-radius", 5);
+  color: $color-white;
+  display: inline-block;
+  @include rem("font-size", 12);
+  @include rem("line-height", 19);
+  height: 30px;
+  min-width: 105px;
+  padding: 4px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  @include transition(all 0.3s ease 0s);
+  @include min-breakpoint(1024) {
+    &:hover {
+      background-color: darken($color-orange, 8%);
+      color: $color-white;
+    }
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-orange;
+    color: $color-white;
+  }
+}
+
+.btn-facebook-full,
+a.btn-facebook-full {
+  background-color: $color-facebook;
+  border: 0 none transparent;
+  @include rem("border-radius", 5);
+  color: $color-white;
+  display: inline-block;
+  @include rem("font-size", 18);
+  @include rem("line-height", 25);
+  font-weight: $font-bold;
+  height: 50px;
+  padding: 12px 15px;
+  position: relative;
+  text-align: center;
+  @include transition(all 0.3s ease 0s);
+  width: 100%;
+
+  .icon-left {
+    display: inline-block;
+    left: 40px;
+    position: absolute;
+    top: 16px;
+  }
+  @include min-breakpoint(1024) {
+    &:hover {
+      background-color: darken($color-facebook, 8%);
+      color: $color-white;
+    }
+  }
+  @include breakpoint(480) {
+    .btn-facebook-full,
+    a.btn-facebook-full {
+      .icon-left {
+        left: 10px;
+      }
+    }
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-facebook;
+    color: $color-white;
+  }
+}
+/*********** button .end ***************/

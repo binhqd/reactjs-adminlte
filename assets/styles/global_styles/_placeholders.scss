@@ -1,0 +1,56 @@
+// |++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// |
+// | Placeholders
+// |++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// Clearfix
+%clearfix {
+  &:before,
+  &:after {
+    display: table;
+    content: " ";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+// Text overflow
+// Requires inline-block or block for proper styling
+%text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// CSS image replacement
+%text-hide {
+  font: "0/0" a;
+  color: transparent;
+  text-shadow: none;
+  text-indent: -9999px;
+  background-color: transparent;
+  border: 0;
+}
+
+// Hide elements in sake of accessibility
+%a11y {
+  position: absolute;
+  top: -32768px;
+  left: -32768px;
+}
+
+// Use the inline-block method as an alternative to float elements
+%ib-parent {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  word-spacing: -1em;
+}
+
+%ib-child {
+  display: inline-block;
+  vertical-align: top;
+  word-spacing: 0;
+}
