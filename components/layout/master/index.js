@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import style from './style';
+//import style from './style';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Immutable from 'immutable';

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as CONFIG from 'base/constants/config';
-import style from './style';
+//import style from './style';
 
 class Notification extends React.Component {
 
