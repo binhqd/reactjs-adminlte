@@ -82,11 +82,29 @@ module.exports = function (env) {
     entry: {
       vendor: [
         'babel-polyfill',
-        'webpack-hot-middleware/client'
+        'webpack-hot-middleware/client',
+
+
+        'jquery',
+        'admin-lte/plugins/jQueryUI/jquery-ui.min.js',
+        'admin-lte/bootstrap/js/bootstrap.min.js',
+        'admin-lte/plugins/morris/morris.min.js',
+        'admin-lte/plugins/sparkline/jquery.sparkline.min.js',
+        'admin-lte/plugins/knob/jquery.knob.js',
+        'moment/moment.js',
+        'admin-lte/plugins/daterangepicker/daterangepicker.js',
+        'admin-lte/plugins/datepicker/bootstrap-datepicker.js'
       ],
       app: [
         'base/index.js',
-        'font-awesome/less/font-awesome.less'
+        'font-awesome/less/font-awesome.less',
+        'admin-lte/bootstrap/css/bootstrap.min.css',
+        'admin-lte/dist/css/AdminLTE.min.css',
+        'admin-lte/dist/css/skins/_all-skins.min.css',
+        //'admin-lte/plugins/iCheck/flat/blue.css',
+        'admin-lte/plugins/morris/morris.css',
+        'admin-lte/plugins/datepicker/datepicker3.css',
+        'admin-lte/plugins/daterangepicker/daterangepicker.css'
       ]
     },
     output: {
@@ -100,7 +118,7 @@ module.exports = function (env) {
           test: /\.(ico|jpg|jpeg|png|eot|ttf|woff|svg)/,
           loader: 'file-loader'
         }, {
-          test: /\.js$/,
+          test: /\.(js|jsx)$/,
           exclude: /(node_modules)/,
           loader: 'babel-loader',
           query: {
@@ -136,7 +154,7 @@ module.exports = function (env) {
             ]
           })
         }, {
-          test: /\.(scss|css)$/,
+          test: /\.(css|scss)$/,
           exclude: /components\/partials\//,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',

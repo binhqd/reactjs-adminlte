@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import LayoutMaster from 'components/layout/master';
+import LayoutMaster from 'components/layouts/master';
 
 class Home extends React.Component {
 

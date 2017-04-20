@@ -1,6 +1,7 @@
 import App from 'components/app';
 import Home from 'components/home';
 import rest from "../api/rest";
+import {Login} from "components/pages";
 
 const {actions} = rest;
 
@@ -14,7 +15,7 @@ export default function routes({dispatch}) {
     //   dispatch(actions.allQuiz.reset());
     // }
     indexRoute: {
-      component: Home
+      component: Login
     },
     childRoutes: [
       {

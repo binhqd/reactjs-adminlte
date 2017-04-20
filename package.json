@@ -21,6 +21,7 @@
   },
   "homepage": "http://redux.js.org",
   "dependencies": {
+    "admin-lte": "^2.3.11",
     "async": "^2.1.5",
     "autoprefixer": "^6.7.5",
     "awesome-typescript-loader": "3.0.5",
@@ -34,12 +35,16 @@
     "babel-preset-stage-2": "^6.13.0",
     "babel-runtime": "^6.23.0",
     "babel-standalone": "^6.23.1",
+    "bootstrap3-wysihtml5-npm": "^0.3.3-npm.12",
     "classnames": "^2.2.5",
     "extract-text-webpack-plugin": "v2.0.0-rc.3",
     "font-awesome": "4.x.x",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
+    "jquery": "2.x.x",
+    "jquery-ui": "1.12.1",
     "less": "^2.7.2",
+    "moment": "2.11.2",
     "node-sass": "4.5.0",
     "normalize.css": "^5.0.0",
     "react": "^15.4.2",
@@ -53,7 +58,8 @@
     "redux-api": "^0.9.17",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.2",
-    "transfer-webpack-plugin": "^0.1.4"
+    "transfer-webpack-plugin": "^0.1.4",
+    "wysihtml": "^0.6.0-beta1"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
