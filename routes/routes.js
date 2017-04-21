@@ -3,6 +3,8 @@ import Home from 'components/home';
 import rest from "../api/rest";
 import {Login, ListCategories, AddCategory, EditCategory} from "components/pages";
 
+import {ListBusinesses, AddBusiness, EditBusiness} from 'components/pages/businesses';
+
 const {actions} = rest;
 
 export default function routes({dispatch}) {
@@ -33,6 +35,18 @@ export default function routes({dispatch}) {
       {
         path: "categories/edit/:id",
         component: EditCategory
+      },
+      {
+        path: "businesses",
+        component: ListBusinesses
+      },
+      {
+        path: "businesses/add",
+        component: AddBusiness
+      },
+      {
+        path: "businesses/edit/:id",
+        component: EditBusiness
       }
     ]
   };
