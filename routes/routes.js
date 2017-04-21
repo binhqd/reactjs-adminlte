@@ -1,7 +1,7 @@
 import App from 'components/app';
 import Home from 'components/home';
 import rest from "../api/rest";
-import {Login} from "components/pages";
+import {Login, ListCategories, AddCategory, EditCategory} from "components/pages";
 
 const {actions} = rest;
 
@@ -21,6 +21,18 @@ export default function routes({dispatch}) {
       {
         path: "home",
         component: Home
+      },
+      {
+        path: "categories",
+        component: ListCategories
+      },
+      {
+        path: "categories/add",
+        component: AddCategory
+      },
+      {
+        path: "categories/edit/:id",
+        component: EditCategory
       }
     ]
   };
