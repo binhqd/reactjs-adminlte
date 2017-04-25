@@ -195,7 +195,8 @@ module.exports = function (env) {
         'api': path.resolve(__dirname, './api/'),
         'base': path.resolve(__dirname, './'),
         'lib': path.resolve(__dirname, './lib/'),
-        'jszip': 'xlsx/jszip.js'
+        'jszip': 'xlsx/jszip.js',
+        'dummy': path.resolve(__dirname, './dummy/')
       },
       modules: [
         path.resolve(__dirname, 'node_modules'),
