@@ -7,14 +7,20 @@ import {Categories} from 'base/api';
 class CategoryList extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.props.dispatch(Categories.actions.list());
+  }
+
+  componentDidMount() {
+    if (this.props.categoriesAsTree.length == 0) {
+      console.log('do this');
+      this.props.dispatch(Categories.actions.list());
+    }
   }
 
   render() {
     return (
       <div>
         {
-          this.props.categories.map(item => {
+          this.props.categoriesAsTree.map(item => {
             return <CategoryBox key={item.id} data={item}/>;
           })
         }
@@ -25,7 +31,7 @@ class CategoryList extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    categories: typeof state.list.data.data != "undefined" ? state.list.data.data : []
+    categoriesAsTree: state.categoriesAsTree
   };
 }
 

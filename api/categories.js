@@ -3,10 +3,10 @@ import customFetch from 'api/axios';
 
 // Example
 const rest = reduxApi({
-  categories: {
-    url: "categories/:id",
-    crud: true
-  },
+  // categories: {
+  //   url: "categories/:id",
+  //   crud: true
+  // },
   list: {
     url: 'categories',
     options:(url, params, getState) => {
@@ -15,7 +15,15 @@ const rest = reduxApi({
         headers: {},
         data: {}
       };
-    }
+    },
+    postfetch: [
+      function({data, dispatch}) {
+        dispatch({
+          type: 'CATEGORIES_TO_TREE',
+          categories: data.data
+        });
+      }
+    ]
   },
   add: {
     url: 'categories',

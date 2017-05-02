@@ -2,6 +2,8 @@ import React from 'react';
 import {PropTypes} from 'prop-types';
 import Promise from 'bluebird';
 import {connect} from 'react-redux';
+import {CategoryParentList} from 'components/category';
+import {Categories} from 'api';
 
 class CategoryForm extends React.Component {
   constructor(props, context) {
@@ -38,6 +40,12 @@ class CategoryForm extends React.Component {
       })
   }
 
+  componentDidMount() {
+    if (this.props.categoriesAsTree.length == 0) {
+      this.props.dispatch(Categories.actions.list());
+    }
+  }
+
   render() {
     return (
       <form>
@@ -56,13 +64,7 @@ class CategoryForm extends React.Component {
                 Dropdown
                 <span className="caret"></span>
               </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" className="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
+              <CategoryParentList data={this.props.categoriesAsTree}/>
             </div>
         </div>
         <div className="form-group">
@@ -77,8 +79,14 @@ class CategoryForm extends React.Component {
   }
 }
 
+const mapStateToProps = function(state) {
+  return {
+    categoriesAsTree: state.categoriesAsTree
+  }
+}
+
 CategoryForm.propTypes = {
   fnSubmit: PropTypes.func.isRequired
 }
 
-export default connect()(CategoryForm);
+export default connect(mapStateToProps)(CategoryForm);
