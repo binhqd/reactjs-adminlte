@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import {Link} from 'react-router';
 
 class ASide extends React.Component {
   constructor(props, context) {
@@ -39,11 +40,11 @@ class ASide extends React.Component {
                 </span>
               </a>
               <ul className="treeview-menu">
-                <li className="active"><a href="index.html"><i className="fa fa-circle-o"></i>Quản lý danh mục</a></li>
+                <li className="active"><Link to="/categories"><i className="fa fa-circle-o"></i>Quản lý danh mục</Link></li>
                 <li><a href="index2.html"><i className="fa fa-circle-o"></i>Quản lý doanh nghiệp</a></li>
               </ul>
             </li>
-            
+
           </ul>
         </section>
       </aside>

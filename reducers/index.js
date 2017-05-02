@@ -1,6 +1,10 @@
-import { combineReducers } from 'redux'
-import { quiz } from './quiz'
+import {combineReducers} from 'redux';
+import { routerReducer } from 'react-router-redux';
+import * as API from 'api';
 
-export const rootReducer = combineReducers({
-    quiz
-})
+let rootReducer = combineReducers({
+  ...API.Categories.reducers,
+  routing: routerReducer
+});
+
+export {rootReducer};

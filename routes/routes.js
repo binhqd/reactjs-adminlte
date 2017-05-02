@@ -7,7 +7,8 @@ import {ListBusinesses, AddBusiness, EditBusiness} from 'components/pages/busine
 
 const {actions} = rest;
 
-export default function routes({dispatch}) {
+export default function routes(options) {
+  const {dispatch} = options;
   return {
     path: "/", component: App,
     // onEnter(state, replaceState, callback) {

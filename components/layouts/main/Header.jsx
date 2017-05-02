@@ -8,7 +8,7 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Something goes here');
+    // console.log('Something goes here');
   }
 
   render() {
