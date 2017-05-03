@@ -1,10 +1,10 @@
 const initialState = [];
-const arrayToTree = require('lib/arrayToTree');
+const {createTreeFromFlatArray, createTreeFromHash} = require('lib/arrayToTree');
 
 function categoriesAsTree(state = initialState, action) {
   switch (action.type) {
     case 'CATEGORIES_TO_TREE':
-      let tree = arrayToTree(action.categories, {
+      let tree = createTreeFromFlatArray(action.categories, {
         parentProperty: 'parent_id'
       });
 
@@ -31,6 +31,12 @@ function categoriesToHash(state = {}, action) {
       return {
         ...mappedArr
       }
+    // case 'REMOVE_CATEGORY':
+    //   let newState= state.filter(item => {
+    //     return item.id != action.id;
+    //   });
+    //
+    //   return newState;
     default:
       return state
   }

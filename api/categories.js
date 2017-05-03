@@ -50,6 +50,16 @@ const rest = reduxApi({
         'Content-Type': 'application/json'
       }
     }
+  },
+  delete: {
+    url: 'categories/:id',
+    options: {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }
   }
 }).use('fetch', customFetch);
 
