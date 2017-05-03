@@ -16,4 +16,24 @@ function categoriesAsTree(state = initialState, action) {
   }
 }
 
-export default categoriesAsTree;
+function categoriesToHash(state = {}, action) {
+  switch (action.type) {
+    case 'ARRAY_CATEGORIES_TO_HASH':
+    let mappedArr = {},
+        arrElem,
+        arr = action.categories;
+
+      for(var i = 0, len = arr.length; i < len; i++) {
+        arrElem = arr[i];
+        mappedArr[arrElem.id] = {...arrElem};
+      }
+
+      return {
+        ...mappedArr
+      }
+    default:
+      return state
+  }
+}
+
+export {categoriesAsTree, categoriesToHash};

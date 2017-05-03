@@ -22,6 +22,12 @@ const rest = reduxApi({
           type: 'CATEGORIES_TO_TREE',
           categories: data.data
         });
+      },
+      function({data, dispatch}) {
+        dispatch({
+          type: 'ARRAY_CATEGORIES_TO_HASH',
+          categories: data.data
+        });
       }
     ]
   },
@@ -29,6 +35,16 @@ const rest = reduxApi({
     url: 'categories',
     options: {
       method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }
+  },
+  update: {
+    url: 'categories/:id',
+    options: {
+      method: "PATCH",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

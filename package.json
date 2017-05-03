@@ -1,7 +1,7 @@
 {
-  "name": "quiz-app",
+  "name": "biz-listing",
   "version": "0.0.1",
-  "description": "Quiz App",
+  "description": "Biz Listing",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "build": "cross-env NODE_ENV=production webpack -p --progress --optimize-max-chunks 15 --optimize-min-chunk-size 10000 --env.prod=true",
