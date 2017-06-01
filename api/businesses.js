@@ -7,38 +7,38 @@ const rest = reduxApi({
   //   url: "categories/:id",
   //   crud: true
   // },
-  list: {
-    url: 'categories',
+  get: {
+    url: 'businesses/:id',
     options:(url, params, getState) => {
       return {
         method: "GET",
         headers: {},
         data: {}
       };
-    },
-    postfetch: [
-      function({data, dispatch}) {
-        dispatch({
-          type: 'CATEGORIES_TO_TREE',
-          categories: data.data
-        });
-      },
-      function({data, dispatch}) {
-        dispatch({
-          type: 'ARRAY_CATEGORIES_TO_HASH',
-          categories: data.data
-        });
-      }
-    ]
+    }
+  },
+  list: {
+    url: 'businesses',
+    options:(url, params, getState) => {
+      return {
+        method: "GET",
+        headers: {},
+        data: {}
+      };
+    }
   },
   add: {
-    url: 'categories/customCreate',
+    url: 'businesses/customCreate',
     options: {
-      method: "POST"
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     }
   },
   update: {
-    url: 'categories/:id',
+    url: 'businesses/:id',
     options: {
       method: "PATCH",
       headers: {
@@ -48,7 +48,7 @@ const rest = reduxApi({
     }
   },
   delete: {
-    url: 'categories/:id',
+    url: 'businesses/:id',
     options: {
       method: "DELETE",
       headers: {
@@ -57,8 +57,8 @@ const rest = reduxApi({
       }
     }
   }
-}).use('fetch', customFetch);
-
-rest.use("rootUrl", "http://localhost:3000/api/");
+})
+.use('fetch', customFetch)
+.use("rootUrl", "http://localhost:3000/api/");
 
 export default rest;
