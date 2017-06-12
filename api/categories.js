@@ -32,9 +32,13 @@ const rest = reduxApi({
     ]
   },
   add: {
-    url: 'categories/customCreate',
+    url: 'categories',
     options: {
-      method: "POST"
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     }
   },
   update: {

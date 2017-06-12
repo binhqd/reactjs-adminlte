@@ -24,7 +24,7 @@ class CategoryBox extends React.Component {
     const img = require('assets/images/placeholder-128.jpg');
     return (
       <div className="media">
-        <h3>{this.props.data.name}</h3> [ <Link to={`/categories/edit/${this.props.data.id}`}>Edit</Link> | <a onClick={this.handleDelete.bind(this, this.props.data.id)}>Delete</a> ]
+        <h3>{this.props.data.name} [ <Link to={`/categories/edit/${this.props.data.id}`}>Edit</Link> | <a onClick={this.handleDelete.bind(this, this.props.data.id)}>Delete</a> ]</h3>
         {
           /*<div className="media-left media-middle">
           <a href="#">

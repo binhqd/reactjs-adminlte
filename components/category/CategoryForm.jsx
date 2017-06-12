@@ -22,23 +22,20 @@ class CategoryForm extends React.Component {
   }
 
   submitForm(e) {
-    e.preventDefault();
+
     let params = {};
 
-    let data = new FormData();
-    data.append('name', this.state.name);
-    data.append('description', this.state.description);
-
-    if (this.refs.uploadFile.files[0]) {
-
-      data.append('fileUpload', this.refs.uploadFile.files[0]);
+    let data = {
+      name: this.state.name,
+      description: this.state.description
     }
 
     if (typeof this.props.categoryId != "undefined") {
       params = {id: this.props.categoryId}
     }
+
     return this.props.dispatch(this.props.fnSubmit(params, {
-      data: data
+      data
     }))
       .then(response => {
         // reload list
@@ -51,7 +48,6 @@ class CategoryForm extends React.Component {
         return Promise.resolve(response)
       })
       .catch(err => {
-        // console.log(err);
         Promise.reject(err);
       })
   }
@@ -86,10 +82,14 @@ class CategoryForm extends React.Component {
     reader.readAsDataURL(file);
   }
 
+  selectParent(id) {
+    console.log(id);
+  }
+
   render() {
 
     return (
-      <form>
+      <div>
         <div className="form-group">
           <label htmlFor="formCatName">Category Name</label>
           <input type="text" className="form-control" value={this.state.name} placeholder="Name" onChange={this.onInputChange.bind(this, 'name')}/>
@@ -107,7 +107,7 @@ class CategoryForm extends React.Component {
                 Dropdown
                 <span className="caret"></span>
               </button>
-              <CategoryParentList data={this.props.categoriesAsTree}/>
+              <CategoryParentList data={this.props.categoriesAsTree} onClick={this.selectParent.bind(this)}/>
             </div>
         </div>
         <div className="form-group">
@@ -121,7 +121,7 @@ class CategoryForm extends React.Component {
             'Add Category'
             : 'Update Category'
           }</button>
-      </form>
+      </div>
     )
   }
 }
