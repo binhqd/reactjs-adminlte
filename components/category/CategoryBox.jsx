@@ -37,7 +37,11 @@ class CategoryBox extends React.Component {
           {
             (this.props.data.children && this.props.data.children.length > 0) ? (
               this.props.data.children.map(item => {
-                return <CategoryBox key={item.id} data={item}/>;
+                return (
+                  <div className="category-children">
+                    <CategoryBox key={item.id} data={item}/>
+                  </div>
+                );
               })
             )
 

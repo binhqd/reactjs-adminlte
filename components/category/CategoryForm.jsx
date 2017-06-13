@@ -27,7 +27,8 @@ class CategoryForm extends React.Component {
 
     let data = {
       name: this.state.name,
-      description: this.state.description
+      description: this.state.description,
+      parent_id: this.state.parent_id
     }
 
     if (typeof this.props.categoryId != "undefined") {
@@ -66,7 +67,7 @@ class CategoryForm extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.categoryHash && nextProps.categoryHash[this.props.categoryId]) {
       let category = nextProps.categoryHash[this.props.categoryId];
-      console.log(category);
+
       this.setState({...category});
     }
   }
@@ -83,11 +84,13 @@ class CategoryForm extends React.Component {
   }
 
   selectParent(id) {
-    console.log(id);
+    this.setState({
+      parent_id: id
+    });
   }
 
   render() {
-
+    let parentCategory = this.props.categoryHash[this.state.parent_id];
     return (
       <div>
         <div className="form-group">
@@ -102,13 +105,7 @@ class CategoryForm extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Select Parent</label>
-            <div className="dropdown">
-              <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Dropdown
-                <span className="caret"></span>
-              </button>
-              <CategoryParentList data={this.props.categoriesAsTree} onClick={this.selectParent.bind(this)}/>
-            </div>
+          <CategoryParentList data={this.props.categoriesAsTree} parentCategory={parentCategory} onClick={this.selectParent.bind(this)}/>
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputFile">Category Logo</label>

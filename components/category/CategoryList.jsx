@@ -11,7 +11,6 @@ class CategoryList extends React.Component {
 
   componentDidMount() {
     if (this.props.categoriesAsTree.length == 0) {
-      console.log('do this');
       this.props.dispatch(Categories.actions.list());
     }
   }
