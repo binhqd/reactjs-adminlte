@@ -11,7 +11,8 @@ class CategoryForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      parent_id: null
+      parent_id: null,
+      logo: null
     }
   }
 
@@ -28,7 +29,8 @@ class CategoryForm extends React.Component {
     let data = {
       name: this.state.name,
       description: this.state.description,
-      parent_id: this.state.parent_id
+      parent_id: this.state.parent_id,
+      logo: this.state.logo
     }
 
     if (typeof this.props.categoryId != "undefined") {
@@ -76,8 +78,20 @@ class CategoryForm extends React.Component {
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
-      this.setState({
-        avatar: reader.result
+      // file load end
+      let data = new FormData();
+      data.append('fileUpload', file);
+
+      this.props.dispatch(
+        Categories.actions.uploadLogo({}, {
+          data: data
+        })
+      ).then(response => {
+        this.setState({
+          logo: response.data.name
+        })
+      }).catch(err => {
+        console.log(err);
       });
     };
     reader.readAsDataURL(file);

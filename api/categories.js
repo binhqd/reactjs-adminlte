@@ -41,6 +41,12 @@ const rest = reduxApi({
       }
     }
   },
+  uploadLogo: {
+    url: 'categories/uploadLogo',
+    options: {
+      method: "POST"
+    }
+  },
   update: {
     url: 'categories/:id',
     options: {
