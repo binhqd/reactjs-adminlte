@@ -9,7 +9,7 @@ class BusinessBox extends React.Component {
   }
 
   handleDelete(catID, e) {
-    if (confirm("Are you sure to delete this business?")) {
+    if (confirm("Bạn có muốn xóa doanh nghiệp này?")) {
       store.dispatch(Categories.actions.delete({ id: catID })).then(response => {
         // store.dispatch({
         //   type: 'REMOVE_CATEGORY',

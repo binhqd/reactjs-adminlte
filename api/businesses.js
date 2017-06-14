@@ -28,7 +28,7 @@ const rest = reduxApi({
     }
   },
   add: {
-    url: 'businesses/customCreate',
+    url: 'businesses',
     options: {
       method: "POST",
       headers: {
@@ -45,6 +45,12 @@ const rest = reduxApi({
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
+    }
+  },
+  uploadLogo: {
+    url: 'businesses/uploadLogo',
+    options: {
+      method: "POST"
     }
   },
   delete: {

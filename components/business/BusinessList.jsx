@@ -12,7 +12,7 @@ class BusinessList extends React.Component {
       businesses: []
     }
 
-    this.props.dispatch(Businesses.actions.list()).then(res => {
+    Businesses.actions.list.request().then(res => {
       this.setState({
         businesses: res.data
       })
@@ -34,7 +34,7 @@ class BusinessList extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    
+
   };
 }
 

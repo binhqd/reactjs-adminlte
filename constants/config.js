@@ -15,7 +15,8 @@ const config = {
 };
 
 config.PORT = Number(env.APP_PORT || 9002);
-config.API_URL = env.API_URL || 'http://localhost:9001';
+config.API_URL = env.API_URL || 'http://localhost:3000';
 config.FB_APP_ID = '';
+config.staticURL = env.STATIC_URL || 'http://localhost:3000';
 
 module.exports = config;

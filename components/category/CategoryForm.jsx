@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {CategoryParentList} from 'components/category';
 import {Categories} from 'api';
 import {browserHistory} from 'react-router';
+import CONFIG from 'base/constants/config';
 
 class CategoryForm extends React.Component {
   constructor(props, context) {
@@ -133,7 +134,7 @@ class CategoryForm extends React.Component {
               let img = require('assets/images/placeholder-128.jpg');
 
               if (this.state.logo) {
-                img = `http://localhost:3000/category-logos/${this.state.logo}`;
+                img = `${CONFIG.staticURL}/category-logos/${this.state.logo}`;
               }
 
               return (

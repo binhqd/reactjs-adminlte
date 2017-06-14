@@ -4,6 +4,8 @@ import Promise from 'bluebird';
 import {connect} from 'react-redux';
 import {Categories, Businesses} from 'api';
 import {CategoryParentList} from 'components/category';
+import {browserHistory} from 'react-router';
+import CONFIG from 'base/constants/config';
 
 class BusinessForm extends React.Component {
   constructor(props, context) {
@@ -12,7 +14,14 @@ class BusinessForm extends React.Component {
       name: '',
       description: '',
       address: '',
-      logo: null
+      geo_lng: '',
+      geo_lat: '',
+      logo: null,
+      images: [],
+      phone: '',
+      fax: '',
+      website: '',
+      category_id: ''
     }
   }
 
@@ -23,25 +32,18 @@ class BusinessForm extends React.Component {
   }
 
   submitForm(e) {
-    e.preventDefault();
     let params = {};
 
-    let data = new FormData();
-
-    data.append("name", this.state.name);
-    data.append("description", this.state.description);
-    data.append("address", this.state.address);
-
-
-    if (this.state.logo != null) {
-      data.append('fileUpload', this.state.logo);
+    let data = {
+      ...this.state
     }
 
     if (typeof this.props.businessId != "undefined") {
-      params = {id: this.props.businessId}
+      params = {id: this.props.businessId};
     }
+
     return this.props.dispatch(this.props.fnSubmit(params, {
-      data: data
+      data
     }))
       .then(response => {
         // reload list
@@ -54,7 +56,6 @@ class BusinessForm extends React.Component {
         return Promise.resolve(response)
       })
       .catch(err => {
-        // console.log(err);
         Promise.reject(err);
       })
   }
@@ -65,61 +66,108 @@ class BusinessForm extends React.Component {
     }
 
     // get business info
-    this.props.dispatch(Businesses.actions.get({id: this.props.businessId})).then(res => {
-      this.setState({
-        name: res.data.name,
-        description: res.data.description,
-        address: res.data.address
+    if (this.props.businessId) {
+      this.props.dispatch(Businesses.actions.get({id: this.props.businessId})).then(res => {
+        this.setState({
+          ...res.data
+        });
       })
-    })
-  }
-
-  componentWillReceiveProps(nextProps) {
+    }
 
   }
 
   handleFileUpload(e) {
     let reader = new FileReader();
     let file = e.target.files[0];
-    this.setState({
-      logo: file
-    })
+    reader.onloadend = () => {
+      // file load end
+      let data = new FormData();
+      data.append('fileUpload', file);
 
-    //reader.readAsDataURL(file);
+      this.props.dispatch(
+        Businesses.actions.uploadLogo({}, {
+          data: data
+        })
+      ).then(response => {
+        this.setState({
+          logo: response.data.name
+        })
+      }).catch(err => {
+        console.log(err);
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  selectParent(id) {
+    this.setState({
+      parent_id: id
+    });
   }
 
   render() {
 
     return (
-      <form>
+      <div>
         <div className="form-group">
-          <label htmlFor="formCatName">Tên doanh nghiệp</label>
+          <label>Tên doanh nghiệp</label>
           <input type="text" className="form-control" value={this.state.name} placeholder="Tên" onChange={this.onInputChange.bind(this, 'name')}/>
         </div>
         <div className="form-group">
-          <label htmlFor="formCatDescription">Mô tả</label>
+          <label>Mô tả</label>
           <textarea className="form-control" placeholder="Mô tả" onChange={this.onInputChange.bind(this, 'description')}
             value={this.state.description}
             />
         </div>
         <div className="form-group">
-          <label htmlFor="formCatName">Địa chỉ</label>
+          <label>Địa chỉ</label>
           <input type="text" className="form-control" value={this.state.address} placeholder="Địa chỉ" onChange={this.onInputChange.bind(this, 'address')}/>
         </div>
+
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Danh mục</label>
-            <div className="dropdown">
-              <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Chọn danh mục
-                <span className="caret"></span>
-              </button>
-              <CategoryParentList data={this.props.categoriesAsTree}/>
-            </div>
+          <label>Vĩ độ</label>
+          <input type="text" className="form-control" value={this.state.geo_lat} placeholder="Vĩ độ" onChange={this.onInputChange.bind(this, 'geo_lat')}/>
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputFile">Logo</label>
+          <label>Kinh độ</label>
+          <input type="text" className="form-control" value={this.state.geo_lng} placeholder="Kinh độ" onChange={this.onInputChange.bind(this, 'geo_lng')}/>
+        </div>
+        <div className="form-group">
+          <label>Số điện thoại</label>
+          <input type="text" className="form-control" value={this.state.phone} placeholder="Số điện thoại" onChange={this.onInputChange.bind(this, 'phone')}/>
+        </div>
+        <div className="form-group">
+          <label>Fax</label>
+          <input type="text" className="form-control" value={this.state.fax} placeholder="Fax" onChange={this.onInputChange.bind(this, 'fax')}/>
+        </div>
+        <div className="form-group">
+          <label>Website</label>
+          <input type="text" className="form-control" value={this.state.website} placeholder="http://" onChange={this.onInputChange.bind(this, 'website')}/>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
+          <CategoryParentList showAll={true} parentCategory={this.state.parent_id} onChange={this.selectParent.bind(this)}/>
+        </div>
+        <div className="form-group">
+          {
+            (() => {
+              let img = require('assets/images/placeholder-128.jpg');
+
+              if (this.state.logo) {
+                img = `${CONFIG.staticURL}/biz-logos/${this.state.logo}`;
+              }
+
+              return (
+                <div>
+                  <img className="media-object" src={img} alt="..." width="128" height="128"/>
+                </div>
+              )
+            })()
+          }
+          <label htmlFor="exampleInputFile">Tải lên logo doanh nghiệp</label>
           <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
-          <small id="fileHelp" className="form-text text-muted">This is some placeholder block-level help text for the above input. It''s a bit lighter and easily wraps to a new line.</small>
+
         </div>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
@@ -127,7 +175,7 @@ class BusinessForm extends React.Component {
             'Thêm doanh nghiệp'
             : 'Cập nhật doanh nghiệp'
           }</button>
-      </form>
+      </div>
     )
   }
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
+const {categoryTreeToArray} = require('lib/arrayToTree');
+
 const rootValue = '';
 class CategoryParentList extends React.Component {
   constructor(props, context) {
@@ -38,14 +40,26 @@ class CategoryParentList extends React.Component {
   }
 
   render() {
+
+    let options = categoryTreeToArray([], this.props.categoriesAsTree, 0);
+
     return (
       <select className="form-control" onChange={this.handleChange.bind(this)} value={this.state.selected}>
         <option value={rootValue}>Danh mục gốc</option>
         {
-          this.props.categoriesAsTree.map(item => {
-            return (
-              <option key={item.id} value={item.id}>{item.name}</option>
-            )
+          options.map(item => {
+            if (this.props.showAll) {
+
+              let prefix = (new Array(item.level)).join('--');
+              return (
+                <option key={item.id} value={item.id}>{prefix}{item.name}</option>
+              )
+            } else if (item.level == 1) {
+              return (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              )
+            }
+
           })
         }
       </select>
@@ -58,7 +72,8 @@ CategoryParentList.propTypes = {
 }
 
 CategoryParentList.defaultProps = {
-  rootCatName: 'Danh mục gốc'
+  rootCatName: 'Danh mục gốc',
+  showAll: false
 }
 
 const mapStateToProps = function(state) {
