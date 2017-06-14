@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {store} from 'base/routes';
 import {Categories} from 'api';
+import CONFIG from 'base/constants/config';
 
 class CategoryBox extends React.Component {
   constructor(props, context) {
@@ -9,7 +10,7 @@ class CategoryBox extends React.Component {
   }
 
   handleDelete(catID, e) {
-    if (confirm("Are you sure to delete this category?")) {
+    if (confirm("Bạn có muốn xóa danh mục này?")) {
       store.dispatch(Categories.actions.delete({ id: catID })).then(response => {
         // store.dispatch({
         //   type: 'REMOVE_CATEGORY',
@@ -24,7 +25,7 @@ class CategoryBox extends React.Component {
     let img = require('assets/images/placeholder-128.jpg');
 
     if (this.props.data.logo) {
-      img = `http://localhost:3000/category-logos/${this.props.data.logo}`;
+      img = `${CONFIG.staticURL}/category-logos/${this.props.data.logo}`;
     }
 
     return (

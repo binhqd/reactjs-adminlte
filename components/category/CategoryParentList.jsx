@@ -45,7 +45,7 @@ class CategoryParentList extends React.Component {
 
     return (
       <select className="form-control" onChange={this.handleChange.bind(this)} value={this.state.selected}>
-        <option value={rootValue}>Danh mục gốc</option>
+        <option value={rootValue}>{this.props.rootCatName}</option>
         {
           options.map(item => {
             if (this.props.showAll) {

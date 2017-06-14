@@ -12,8 +12,7 @@ class EditBusiness extends React.Component {
 
   cb(response) {
     // Back to categories list
-    console.log(response);
-    // browserHistory.push('/businesses');
+    browserHistory.push('/businesses');
   }
 
   render() {

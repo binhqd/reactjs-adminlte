@@ -21,7 +21,8 @@ class BusinessForm extends React.Component {
       phone: '',
       fax: '',
       website: '',
-      category_id: ''
+      categoryid: '',
+      category_id: '123'
     }
   }
 
@@ -61,10 +62,6 @@ class BusinessForm extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.categoriesAsTree.length == 0) {
-      this.props.dispatch(Categories.actions.list());
-    }
-
     // get business info
     if (this.props.businessId) {
       this.props.dispatch(Businesses.actions.get({id: this.props.businessId})).then(res => {
@@ -99,9 +96,9 @@ class BusinessForm extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  selectParent(id) {
+  selectCategory(id) {
     this.setState({
-      parent_id: id
+      categoryid: id
     });
   }
 
@@ -147,7 +144,7 @@ class BusinessForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList showAll={true} parentCategory={this.state.parent_id} onChange={this.selectParent.bind(this)}/>
+          <CategoryParentList showAll={true} parentCategory={this.state.categoryid} onChange={this.selectCategory.bind(this)}/>
         </div>
         <div className="form-group">
           {
@@ -175,6 +172,8 @@ class BusinessForm extends React.Component {
             'Thêm doanh nghiệp'
             : 'Cập nhật doanh nghiệp'
           }</button>
+
+        <button type='button' className="btn" onClick={() => browserHistory.push('/businesses')}>Thoát</button>
       </div>
     )
   }

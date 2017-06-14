@@ -1,36 +1,53 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {store} from 'base/routes';
-import {Categories} from 'api';
+import {Businesses} from 'api';
+import {browserHistory} from 'react-router';
+import {connect} from 'react-redux';
+import CONFIG from 'base/constants/config';
 
 class BusinessBox extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
-  handleDelete(catID, e) {
+  handleDelete(bizID, e) {
     if (confirm("Bạn có muốn xóa doanh nghiệp này?")) {
-      store.dispatch(Categories.actions.delete({ id: catID })).then(response => {
+      Businesses.actions.delete.request({ id: bizID }).then(response => {
         // store.dispatch({
         //   type: 'REMOVE_CATEGORY',
         //   id: catID
         // });
-        store.dispatch(Categories.actions.list());
+        this.props.dispatch({
+          type: 'REMOVE_BUSINESS',
+          businessId: bizID
+        });
       });
     }
   }
 
   render() {
-    const img = require('assets/images/placeholder-128.jpg');
+    let img = require('assets/images/placeholder-128.jpg');
+
+    if (this.props.data.logo) {
+      img = `${CONFIG.staticURL}/biz-logos/${this.props.data.logo}`;
+    }
+
     return (
       <div className="media">
-        <h3>{this.props.data.name}</h3> [ <Link to={`/businesses/edit/${this.props.data.id}`}>Sửa</Link> | <a onClick={this.handleDelete.bind(this, this.props.data.id)}>Xóa</a> ]
+        <h3>
+          {this.props.data.name}
+
+          <Link to={`/businesses/edit/${this.props.data.id}`}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
+          <a onClick={this.handleDelete.bind(this, this.props.data.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+        </h3>
+
         {
-          /*<div className="media-left media-middle">
+          <div className="media-left media-middle">
           <a href="#">
             <img className="media-object" src={img} alt="..." width="64" height="64"/>
           </a>
-        </div>*/
+        </div>
         }
         <div className="media-body">
           <p>{this.props.data.description}</p>
@@ -49,4 +66,4 @@ class BusinessBox extends React.Component {
   }
 }
 
-export default BusinessBox;
+export default connect()(BusinessBox);

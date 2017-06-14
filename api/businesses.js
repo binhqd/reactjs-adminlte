@@ -27,6 +27,16 @@ const rest = reduxApi({
       };
     }
   },
+  filterByCat: {
+    url: 'businesses?filter[where][category_id][regexp]=^(:catID)',
+    options:(url, params, getState) => {
+      return {
+        method: "GET",
+        headers: {},
+        data: {}
+      };
+    }
+  },
   add: {
     url: 'businesses',
     options: {
