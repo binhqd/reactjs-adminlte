@@ -1,92 +1,71 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-const CategoryParentListItem = function(props) {
-  return (
-    <li onClick={props.onClick.bind(this, props.data)}>{props.data.name}</li>
-  )
-}
-
-class CategoryParentListItemWithChildren extends React.Component {
-  componentDidMount() {
-    const _this = this;
-    $(this.refs.submenuLabel).on("click", function(e) {
-      _this.props.onClick(_this.props.data)
-
-      $(this).next('ul').toggle();
-      e.stopPropagation();
-      e.preventDefault();
-    });
-  }
-  render() {
-    return (
-      <li className="dropdown-submenu">
-        <a ref='submenuLabel' className="test" tabIndex="-1" href="#" onClick={this.props.onClick.bind(this, this.props.data)}>{this.props.data.name}<span className="caret"></span></a>
-        <DropdownList data={this.props.data.children} onClick={this.props.onClick.bind(this)}/>
-      </li>
-    )
-  }
-}
-
-class DropdownList extends React.Component {
-  render() {
-    return (
-      <ul className="dropdown-menu">
-        <li onClick={this.props.onClick.bind(this, null)}>{this.props.rootCatName}</li>
-        {this.props.data.map(item => {
-          if (typeof item.children != "undefined" && item.children.length > 0) {
-            return (
-              <CategoryParentListItemWithChildren data={item} onClick={this.props.onClick.bind(this)}/>
-            );
-          } else return (
-            <CategoryParentListItem data={item} onClick={this.props.onClick.bind(this)}/>
-          )
-        })}
-      </ul>
-    )
-  }
-}
-
+const rootValue = '';
 class CategoryParentList extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      selected: this.props.parentCategory
+      selected: this.props.parentCategory == null ? '' : this.props.parentCategory
     }
   }
 
-  onClick(selectedCat, e) {
-    if (typeof this.state.selected == "undefined" || selectedCat.id != this.state.selected.id) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.parentCategory != null && nextProps.parentCategory != this.state.selected) {
+      this.setState({
+        selected: nextProps.parentCategory
+      })
+    }
+  }
+
+  handleChange(e) {
+    if (e.target.value == rootValue) {
+      this.props.onChange(null);
+      return;
+    }
+
+    let selectedCat = this.props.categoryHash[e.target.value];
+
+    if (typeof this.state.selected == "undefined" || selectedCat.id != this.state.selected) {
       this.setState({
         selected: selectedCat
       });
 
-      this.props.onClick(selectedCat.id);
+      this.props.onChange(selectedCat.id);
     }
-
   }
 
   render() {
     return (
-      <div className="dropdown">
-        <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          { typeof this.props.parentCategory != "undefined" ? this.props.parentCategory.name : this.props.rootCatName }
-          <span className="caret"></span>
-        </button>
-        <DropdownList data={this.props.data} onClick={this.onClick.bind(this)}/>
-      </div>
-    );
+      <select className="form-control" onChange={this.handleChange.bind(this)} value={this.state.selected}>
+        <option value={rootValue}>Danh mục gốc</option>
+        {
+          this.props.categoriesAsTree.map(item => {
+            return (
+              <option key={item.id} value={item.id}>{item.name}</option>
+            )
+          })
+        }
+      </select>
+    )
   }
 }
 
 CategoryParentList.propTypes = {
-  categoriesAsTree: PropTypes.array.isRequired,
-  parentCategory: PropTypes.object
+  categoriesAsTree: PropTypes.array.isRequired
 }
 
 CategoryParentList.defaultProps = {
   rootCatName: 'Danh mục gốc'
 }
 
-export default CategoryParentList;
+const mapStateToProps = function(state) {
+  return {
+    categoriesAsTree: state.categoriesAsTree,
+    categoryHash: state.categoryHash
+  }
+}
+
+export default connect(mapStateToProps)(CategoryParentList);

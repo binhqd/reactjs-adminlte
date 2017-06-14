@@ -34,7 +34,12 @@ class CategoryForm extends React.Component {
     }
 
     if (typeof this.props.categoryId != "undefined") {
-      params = {id: this.props.categoryId}
+      params = {id: this.props.categoryId};
+
+      // prevent self parenting
+      if (this.props.categoryId == data.parent_id) {
+        delete data.parent_id;
+      }
     }
 
     return this.props.dispatch(this.props.fnSubmit(params, {
@@ -108,29 +113,29 @@ class CategoryForm extends React.Component {
     return (
       <div>
         <div className="form-group">
-          <label htmlFor="formCatName">Category Name</label>
+          <label htmlFor="formCatName">Tên danh mục</label>
           <input type="text" className="form-control" value={this.state.name} placeholder="Name" onChange={this.onInputChange.bind(this, 'name')}/>
         </div>
         <div className="form-group">
-          <label htmlFor="formCatDescription">Description</label>
+          <label htmlFor="formCatDescription">Mô tả</label>
           <textarea className="form-control" placeholder="Description" onChange={this.onInputChange.bind(this, 'description')}
             value={this.state.description}
             />
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Select Parent</label>
-          <CategoryParentList data={this.props.categoriesAsTree} parentCategory={parentCategory} onClick={this.selectParent.bind(this)}/>
+          <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
+          <CategoryParentList parentCategory={this.state.parent_id} onChange={this.selectParent.bind(this)}/>
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputFile">Category Logo</label>
+          <label htmlFor="exampleInputFile">Tải lên logo danh mục</label>
           <input ref='uploadFile' type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
-          <small id="fileHelp" className="form-text text-muted">This is some placeholder block-level help text for the above input. It''s a bit lighter and easily wraps to a new line.</small>
+
         </div>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
             typeof this.props.categoryId == "undefined" ?
-            'Add Category'
-            : 'Update Category'
+            'Thêm danh mục'
+            : 'Cập nhật danh mục'
           }</button>
       </div>
     )
