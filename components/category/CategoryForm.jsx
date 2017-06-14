@@ -4,6 +4,7 @@ import Promise from 'bluebird';
 import {connect} from 'react-redux';
 import {CategoryParentList} from 'components/category';
 import {Categories} from 'api';
+import {browserHistory} from 'react-router';
 
 class CategoryForm extends React.Component {
   constructor(props, context) {
@@ -137,6 +138,8 @@ class CategoryForm extends React.Component {
             'Thêm danh mục'
             : 'Cập nhật danh mục'
           }</button>
+
+        <button type='button' className="btn" onClick={() => browserHistory.push('/categories')}>Thoát</button>
       </div>
     )
   }
