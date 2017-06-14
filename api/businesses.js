@@ -1,6 +1,8 @@
 import reduxApi, {transformers} from 'redux-api';
 import customFetch from 'api/axios';
 
+const limit = 20;
+
 // Example
 const rest = reduxApi({
   // categories: {
@@ -18,7 +20,7 @@ const rest = reduxApi({
     }
   },
   list: {
-    url: 'businesses',
+    url: `businesses?filter[limit]=${limit}`,
     options:(url, params, getState) => {
       return {
         method: "GET",
@@ -28,7 +30,7 @@ const rest = reduxApi({
     }
   },
   filterByCat: {
-    url: 'businesses?filter[where][category_id][regexp]=^(:catID)',
+    url: `businesses?filter[where][category_id][regexp]=^(:catID)&filter[limit]=${limit}`,
     options:(url, params, getState) => {
       return {
         method: "GET",
