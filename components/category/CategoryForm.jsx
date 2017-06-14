@@ -128,6 +128,21 @@ class CategoryForm extends React.Component {
           <CategoryParentList parentCategory={this.state.parent_id} onChange={this.selectParent.bind(this)}/>
         </div>
         <div className="form-group">
+          {
+            (() => {
+              let img = require('assets/images/placeholder-128.jpg');
+
+              if (this.state.logo) {
+                img = `http://localhost:3000/category-logos/${this.state.logo}`;
+              }
+
+              return (
+                <div>
+                  <img className="media-object" src={img} alt="..." width="64" height="64"/>
+                </div>
+              )
+            })()
+          }
           <label htmlFor="exampleInputFile">Tải lên logo danh mục</label>
           <input ref='uploadFile' type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
 
