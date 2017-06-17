@@ -41,13 +41,12 @@ class PromotionBox extends React.Component {
           <Link to={`/promotions/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
           <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
         </h3>
-
         {
           <div className="media-left media-middle">
-          <a href="#">
-            <img className="media-object" src={img} alt="..." height="64"/>
-          </a>
-        </div>
+            <a href="#">
+              <img className="media-object" src={img} alt="..." height="64"/>
+            </a>
+          </div>
         }
         <div className="media-body">
           <p>{this.props.data.description}</p>
@@ -57,7 +56,6 @@ class PromotionBox extends React.Component {
                 return <PromotionBox key={item.id} data={item}/>;
               })
             )
-
              : ''
           }
         </div>

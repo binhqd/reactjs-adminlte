@@ -65,6 +65,12 @@ const rest = reduxApi({
       method: "POST"
     }
   },
+  uploadImage: {
+    url: 'businesses/uploadImage',
+    options: {
+      method: "POST"
+    }
+  },
   delete: {
     url: 'businesses/:id',
     options: {

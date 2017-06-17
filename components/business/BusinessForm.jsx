@@ -6,6 +6,9 @@ import {Categories, Businesses} from 'api';
 import {CategoryParentList} from 'components/category';
 import {browserHistory} from 'react-router';
 import CONFIG from 'base/constants/config';
+import BizGallery from './BizGallery.jsx';
+
+let styles = require('./styles.scss');
 
 class BusinessForm extends React.Component {
   constructor(props, context) {
@@ -63,11 +66,11 @@ class BusinessForm extends React.Component {
   componentDidMount() {
     // get business info
     if (this.props.businessId) {
-      this.props.dispatch(Businesses.actions.get({id: this.props.businessId})).then(res => {
+      Businesses.actions.get.request({id: this.props.businessId}).then(res => {
         this.setState({
           ...res.data
         });
-      })
+      });
     }
 
   }
@@ -104,6 +107,12 @@ class BusinessForm extends React.Component {
   removeLogo() {
     this.setState({
       logo: ''
+    })
+  }
+
+  onGalleryChange(images, e) {
+    this.setState({
+      images
     })
   }
 
@@ -168,10 +177,11 @@ class BusinessForm extends React.Component {
               )
             })()
           }
-          <label htmlFor="exampleInputFile">Tải lên logo doanh nghiệp</label>
+          <label>Tải lên logo doanh nghiệp</label>
           <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
-
         </div>
+
+        <BizGallery label="Hình doanh nghiệp" images={this.state.images} uploadFunc={Businesses.actions.uploadImage.request} onChange={this.onGalleryChange.bind(this)}/>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
             typeof this.props.businessId == "undefined" ?
