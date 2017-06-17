@@ -16,13 +16,13 @@ class PromotionForm extends React.Component {
       business_id: '',
       category_id: '',
       banner: '',
-      expiry_date
+      expiry_date: new Date()
     }
   }
 
   onInputChange(name, e) {
     this.setState({
-      [name]: e.target.value
+      [name]: typeof e.target != "undefined" ? e.target.value : e
     })
   }
 
@@ -81,7 +81,7 @@ class PromotionForm extends React.Component {
         })
       ).then(response => {
         this.setState({
-          logo: response.data.name
+          banner: response.data
         })
       }).catch(err => {
         console.log(err);
@@ -90,19 +90,13 @@ class PromotionForm extends React.Component {
     reader.readAsDataURL(file);
   }
 
-  selectCategory(id) {
-    this.setState({
-      categoryid: id
-    });
-  }
-
   render() {
 
     return (
       <div>
         <div className="form-group">
-          <label>Tên doanh nghiệp</label>
-          <input type="text" className="form-control" value={this.state.name} placeholder="Tên" onChange={this.onInputChange.bind(this, 'name')}/>
+          <label>Tiêu đề</label>
+          <input type="text" className="form-control" value={this.state.title} placeholder="Tiêu đề" onChange={this.onInputChange.bind(this, 'title')}/>
         </div>
         <div className="form-group">
           <label>Mô tả</label>
@@ -110,43 +104,18 @@ class PromotionForm extends React.Component {
             value={this.state.description}
             />
         </div>
-        <div className="form-group">
-          <label>Địa chỉ</label>
-          <input type="text" className="form-control" value={this.state.address} placeholder="Địa chỉ" onChange={this.onInputChange.bind(this, 'address')}/>
-        </div>
-
-        <div className="form-group">
-          <label>Vĩ độ</label>
-          <input type="text" className="form-control" value={this.state.geo_lat} placeholder="Vĩ độ" onChange={this.onInputChange.bind(this, 'geo_lat')}/>
-        </div>
-        <div className="form-group">
-          <label>Kinh độ</label>
-          <input type="text" className="form-control" value={this.state.geo_lng} placeholder="Kinh độ" onChange={this.onInputChange.bind(this, 'geo_lng')}/>
-        </div>
-        <div className="form-group">
-          <label>Số điện thoại</label>
-          <input type="text" className="form-control" value={this.state.phone} placeholder="Số điện thoại" onChange={this.onInputChange.bind(this, 'phone')}/>
-        </div>
-        <div className="form-group">
-          <label>Fax</label>
-          <input type="text" className="form-control" value={this.state.fax} placeholder="Fax" onChange={this.onInputChange.bind(this, 'fax')}/>
-        </div>
-        <div className="form-group">
-          <label>Website</label>
-          <input type="text" className="form-control" value={this.state.website} placeholder="http://" onChange={this.onInputChange.bind(this, 'website')}/>
-        </div>
 
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList showAll={true} parentCategory={this.state.categoryid} onChange={this.selectCategory.bind(this)}/>
+          <CategoryParentList showAll={true} parentCategory={this.state.categoryid} onChange={this.onInputChange.bind(this, 'category_id')}/>
         </div>
         <div className="form-group">
           {
             (() => {
               let img = require('assets/images/placeholder-128.jpg');
 
-              if (this.state.logo) {
-                img = `${CONFIG.staticURL}/biz-logos/${this.state.logo}`;
+              if (this.state.banner) {
+                img = `${CONFIG.staticURL}/promotion-banners/${this.state.banner.name}`;
               }
 
               return (
@@ -156,15 +125,15 @@ class PromotionForm extends React.Component {
               )
             })()
           }
-          <label htmlFor="exampleInputFile">Tải lên logo doanh nghiệp</label>
+          <label htmlFor="exampleInputFile">Tải lên banner khuyến mãi</label>
           <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
 
         </div>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
             typeof this.props.promotionId == "undefined" ?
-            'Thêm doanh nghiệp'
-            : 'Cập nhật doanh nghiệp'
+            'Thêm tin khuyến mãi'
+            : 'Cập nhật tin khuyến mãi'
           }</button>
 
         <button type='button' className="btn" onClick={() => browserHistory.push('/promotions')}>Thoát</button>

@@ -1,11 +1,11 @@
 import React from 'react';
-// import Businesses from 'dummy/categories';
-import {BusinessBox} from 'components/business';
+// import Promotions from 'dummy/categories';
+import {PromotionBox} from 'components/promotion';
 import {connect} from 'react-redux';
-import {Businesses} from 'base/api';
+import {Promotions} from 'base/api';
 import {CategoryParentList} from 'components/category';
 
-class BusinessList extends React.Component {
+class PromotionList extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -13,10 +13,10 @@ class BusinessList extends React.Component {
 
     }
 
-    Businesses.actions.list.request().then(response => {
+    Promotions.actions.list.request().then(response => {
       this.props.dispatch({
-        type: 'UPDATE_BUSINESSES_LIST',
-        businesses: response.data
+        type: 'UPDATE_PROMOTION_LIST',
+        promotions: response.data
       })
     });
   }
@@ -29,10 +29,10 @@ class BusinessList extends React.Component {
     if (!catID){
       catID = ".*";
     }
-    Businesses.actions.filterByCat.request({catID: catID}).then(response => {
+    Promotions.actions.filterByCat.request({catID: catID}).then(response => {
       this.props.dispatch({
-        type: 'UPDATE_BUSINESSES_LIST',
-        businesses: response.data
+        type: 'UPDATE_PROMOTION_LIST',
+        promotions: response.data
       })
     })
   }
@@ -41,12 +41,12 @@ class BusinessList extends React.Component {
     return (
       <div>
         <div className="form-group">
-          <label>Lọc doanh nghiệp theo danh mục:</label>
+          <label>Lọc khuyến mãi theo danh mục:</label>
           <CategoryParentList rootCatName='Tất cả lĩnh vực' parentCategory={this.state.selectedCatID} showAll={true} onChange={this.handleFilter.bind(this)}/>
         </div>
         {
-          this.props.listBusinesses.map(business => {
-            return <BusinessBox key={business.id} data={business}/>;
+          this.props.listPromotions.map(promotion => {
+            return <PromotionBox key={promotion.id} data={promotion}/>;
           })
         }
       </div>
@@ -56,8 +56,8 @@ class BusinessList extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    listBusinesses: state.listBusinesses
+    listPromotions: state.listPromotions
   };
 }
 
-export default connect(mapStateToProps)(BusinessList);
+export default connect(mapStateToProps)(PromotionList);
