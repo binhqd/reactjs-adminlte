@@ -21,8 +21,7 @@ class BusinessForm extends React.Component {
       phone: '',
       fax: '',
       website: '',
-      categoryid: '',
-      category_id: '123'
+      category_id: ''
     }
   }
 
@@ -98,8 +97,14 @@ class BusinessForm extends React.Component {
 
   selectCategory(id) {
     this.setState({
-      categoryid: id
+      category_id: id
     });
+  }
+
+  removeLogo() {
+    this.setState({
+      logo: ''
+    })
   }
 
   render() {
@@ -144,8 +149,9 @@ class BusinessForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList showAll={true} parentCategory={this.state.categoryid} onChange={this.selectCategory.bind(this)}/>
+          <CategoryParentList showAll={true} parentCategory={this.state.category_id} onChange={this.selectCategory.bind(this)}/>
         </div>
+
         <div className="form-group">
           {
             (() => {
@@ -157,7 +163,7 @@ class BusinessForm extends React.Component {
 
               return (
                 <div>
-                  <img className="media-object" src={img} alt="..." width="128" height="128"/>
+                  <img className="media-object" src={img} alt="..." width="128" height="128"/> [ <a href='javascript:void(0)' onClick={this.removeLogo.bind(this)}>Xóa</a> ]
                 </div>
               )
             })()

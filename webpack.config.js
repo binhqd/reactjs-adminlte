@@ -98,6 +98,7 @@ module.exports = function (env) {
       app: [
         'base/index.js',
         'font-awesome/less/font-awesome.less',
+        'assets/styles/global.css',
         'admin-lte/bootstrap/css/bootstrap.min.css',
         'admin-lte/dist/css/AdminLTE.min.css',
         'admin-lte/dist/css/skins/_all-skins.min.css',

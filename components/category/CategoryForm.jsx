@@ -110,6 +110,12 @@ class CategoryForm extends React.Component {
     });
   }
 
+  removeLogo() {
+    this.setState({
+      logo: ''
+    })
+  }
+
   render() {
     let parentCategory = this.props.categoryHash[this.state.parent_id];
     return (
@@ -139,7 +145,7 @@ class CategoryForm extends React.Component {
 
               return (
                 <div>
-                  <img className="media-object" src={img} alt="..." width="64" height="64"/>
+                  <img className="media-object" src={img} alt="..." width="64" height="64"/> [ <a href='javascript:void(0)' onClick={this.removeLogo.bind(this)}>Xóa</a> ]
                 </div>
               )
             })()
