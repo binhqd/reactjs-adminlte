@@ -107,7 +107,7 @@ class PromotionForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList showAll={true} parentCategory={this.state.categoryid} onChange={this.onInputChange.bind(this, 'category_id')}/>
+          <CategoryParentList showAll={true} parentCategory={this.state.category_id} onChange={this.onInputChange.bind(this, 'category_id')}/>
         </div>
         <div className="form-group">
           {
