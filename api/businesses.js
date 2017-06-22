@@ -30,7 +30,7 @@ const rest = reduxApi({
     }
   },
   filterByCat: {
-    url: `businesses?filter[where][category_id][regexp]=^(:catID)&filter[limit]=${limit}`,
+    url: `businesses?filter[where][category_id][regexp]=^(:catID)&filter[where][name][regexp]=(:name)&filter[limit]=${limit}`,
     options:(url, params, getState) => {
       return {
         method: "GET",
@@ -61,6 +61,12 @@ const rest = reduxApi({
   },
   uploadLogo: {
     url: 'businesses/uploadLogo',
+    options: {
+      method: "POST"
+    }
+  },
+  uploadImage: {
+    url: 'businesses/uploadImage',
     options: {
       method: "POST"
     }

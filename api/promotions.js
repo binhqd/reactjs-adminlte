@@ -30,7 +30,7 @@ const rest = reduxApi({
     }
   },
   filterByCat: {
-    url: `promotions?filter[where][category_id][regexp]=^(:catID)&filter[limit]=${limit}`,
+    url: `promotions?filter[where][category_id][regexp]=^(:catID)&filter[where][title][regexp]=(:title)&filter[limit]=${limit}`,
     options:(url, params, getState) => {
       return {
         method: "GET",

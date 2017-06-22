@@ -4,6 +4,7 @@ import rest from "../api/rest";
 import {Login, ListCategories, AddCategory, EditCategory} from "components/pages";
 
 import {ListBusinesses, AddBusiness, EditBusiness} from 'components/pages/businesses';
+import {ListPromotions, AddPromotion, EditPromotion} from 'components/pages/promotions';
 
 const {actions} = rest;
 
@@ -48,6 +49,18 @@ export default function routes(options) {
       {
         path: "businesses/edit/:id",
         component: EditBusiness
+      },
+      {
+        path: "promotions",
+        component: ListPromotions
+      },
+      {
+        path: "promotions/add",
+        component: AddPromotion
+      },
+      {
+        path: "promotions/edit/:id",
+        component: EditPromotion
       }
     ]
   };

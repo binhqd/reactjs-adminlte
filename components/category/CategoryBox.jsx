@@ -31,8 +31,8 @@ class CategoryBox extends React.Component {
     return (
       <div className="media">
         <h3>{this.props.data.name}
-          <Link to={`/categories/edit/${this.props.data.id}`}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
-          <a onClick={this.handleDelete.bind(this, this.props.data.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a></h3>
+          <Link to={`/categories/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
+          <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a></h3>
         {
           <div className="media-left media-middle">
           <a href="#">

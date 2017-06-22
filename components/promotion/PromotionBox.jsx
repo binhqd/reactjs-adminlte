@@ -29,25 +29,24 @@ class PromotionBox extends React.Component {
   render() {
     let img = require('assets/images/placeholder-128.jpg');
 
-    if (this.props.data.logo) {
-      img = `${CONFIG.staticURL}/biz-logos/${this.props.data.logo}`;
+    if (this.props.data.banner) {
+      img = `${CONFIG.staticURL}/promotion-banners/${this.props.data.banner.name}`;
     }
 
     return (
       <div className="media">
         <h3>
-          {this.props.data.name}
+          {this.props.data.title}
 
-          <Link to={`/promotions/edit/${this.props.data.id}`}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
-          <a onClick={this.handleDelete.bind(this, this.props.data.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          <Link to={`/promotions/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
+          <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
         </h3>
-
         {
           <div className="media-left media-middle">
-          <a href="#">
-            <img className="media-object" src={img} alt="..." width="64" height="64"/>
-          </a>
-        </div>
+            <a href="#">
+              <img className="media-object" src={img} alt="..." height="64"/>
+            </a>
+          </div>
         }
         <div className="media-body">
           <p>{this.props.data.description}</p>
@@ -57,7 +56,6 @@ class PromotionBox extends React.Component {
                 return <PromotionBox key={item.id} data={item}/>;
               })
             )
-
              : ''
           }
         </div>

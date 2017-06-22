@@ -6,6 +6,9 @@ import {Categories, Businesses} from 'api';
 import {CategoryParentList} from 'components/category';
 import {browserHistory} from 'react-router';
 import CONFIG from 'base/constants/config';
+import BizGallery from './BizGallery.jsx';
+
+let styles = require('./styles.scss');
 
 class BusinessForm extends React.Component {
   constructor(props, context) {
@@ -21,8 +24,7 @@ class BusinessForm extends React.Component {
       phone: '',
       fax: '',
       website: '',
-      categoryid: '',
-      category_id: '123'
+      category_id: ''
     }
   }
 
@@ -64,11 +66,11 @@ class BusinessForm extends React.Component {
   componentDidMount() {
     // get business info
     if (this.props.businessId) {
-      this.props.dispatch(Businesses.actions.get({id: this.props.businessId})).then(res => {
+      Businesses.actions.get.request({id: this.props.businessId}).then(res => {
         this.setState({
           ...res.data
         });
-      })
+      });
     }
 
   }
@@ -98,8 +100,20 @@ class BusinessForm extends React.Component {
 
   selectCategory(id) {
     this.setState({
-      categoryid: id
+      category_id: id
     });
+  }
+
+  removeLogo() {
+    this.setState({
+      logo: ''
+    })
+  }
+
+  onGalleryChange(images, e) {
+    this.setState({
+      images
+    })
   }
 
   render() {
@@ -144,8 +158,9 @@ class BusinessForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList showAll={true} parentCategory={this.state.categoryid} onChange={this.selectCategory.bind(this)}/>
+          <CategoryParentList showAll={true} parentCategory={this.state.category_id} onChange={this.selectCategory.bind(this)}/>
         </div>
+
         <div className="form-group">
           {
             (() => {
@@ -157,15 +172,16 @@ class BusinessForm extends React.Component {
 
               return (
                 <div>
-                  <img className="media-object" src={img} alt="..." width="128" height="128"/>
+                  <img className="media-object" src={img} alt="..." width="128" height="128"/> [ <a href='javascript:void(0)' onClick={this.removeLogo.bind(this)}>Xóa</a> ]
                 </div>
               )
             })()
           }
-          <label htmlFor="exampleInputFile">Tải lên logo doanh nghiệp</label>
+          <label>Tải lên logo doanh nghiệp</label>
           <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
-
         </div>
+
+        <BizGallery label="Hình doanh nghiệp" images={this.state.images} uploadFunc={Businesses.actions.uploadImage.request} onChange={this.onGalleryChange.bind(this)}/>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
             typeof this.props.businessId == "undefined" ?

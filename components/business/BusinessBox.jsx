@@ -38,8 +38,8 @@ class BusinessBox extends React.Component {
         <h3>
           {this.props.data.name}
 
-          <Link to={`/businesses/edit/${this.props.data.id}`}><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
-          <a onClick={this.handleDelete.bind(this, this.props.data.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          <Link to={`/businesses/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
+          <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
         </h3>
 
         {
