@@ -13,7 +13,7 @@ const env = process.env || {}; // eslint-disable-line no-process-env
 const config = {
   ENV: env.NODE_ENV || 'development',
   staticURL: env.STATIC_URL || 'http://localhost:3000',
-  API_URL: env.API_URL || 'http://localhost:3000',
+  API_URL: env.API_URL || 'http://localhost:3000/api/',
   PORT: Number(env.APP_PORT || 9002)
 };
 

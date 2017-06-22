@@ -1,5 +1,6 @@
 import reduxApi, {transformers} from 'redux-api';
 import customFetch from 'api/axios';
+import CONFIG from 'base/constants/config';
 
 // Example
 const rest = reduxApi({
@@ -67,8 +68,7 @@ const rest = reduxApi({
       }
     }
   }
-}).use('fetch', customFetch);
-
-rest.use("rootUrl", "http://localhost:3000/api/");
+}).use('fetch', customFetch)
+.use("rootUrl", CONFIG.API_URL);
 
 export default rest;
