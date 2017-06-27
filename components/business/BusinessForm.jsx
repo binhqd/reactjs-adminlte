@@ -9,6 +9,7 @@ import CONFIG from 'base/constants/config';
 import BizGallery from './BizGallery.jsx';
 
 let styles = require('./styles.scss');
+let geocoder = new google.maps.Geocoder();
 
 class BusinessForm extends React.Component {
   constructor(props, context) {
@@ -29,8 +30,9 @@ class BusinessForm extends React.Component {
   }
 
   onInputChange(name, e) {
+    let value = e.target ? e.target.value : e;
     this.setState({
-      [name]: e.target.value
+      [name]: value
     })
   }
 
@@ -104,6 +106,34 @@ class BusinessForm extends React.Component {
     });
   }
 
+  onAddressChange(e) {
+    let value = e.target ? e.target.value : e;
+    this.onInputChange('address', e);
+
+    if (this.getGeoCodeTimeout) {
+      clearTimeout(this.getGeoCodeTimeout);
+    }
+
+    this.getGeoCodeTimeout = setTimeout(() => {
+      geocoder.geocode({
+        'address': value
+      }, (results, status) => {
+        console.log(results, status);
+          if (status == google.maps.GeocoderStatus.OK) {
+            console.log(results);
+            this.setState({
+              geo_lat: results[0].geometry.location.lat(),
+              geo_lng: results[0].geometry.location.lng()
+            })
+          } else {
+            // console.log(status);
+          }
+      });
+    }, 1000);
+
+
+  }
+
   removeLogo() {
     this.setState({
       logo: ''
@@ -132,16 +162,16 @@ class BusinessForm extends React.Component {
         </div>
         <div className="form-group">
           <label>Địa chỉ</label>
-          <input type="text" className="form-control" value={this.state.address} placeholder="Địa chỉ" onChange={this.onInputChange.bind(this, 'address')}/>
+          <input type="text" className="form-control" value={this.state.address} placeholder="Địa chỉ" onChange={this.onAddressChange.bind(this)}/>
         </div>
 
         <div className="form-group">
           <label>Vĩ độ</label>
-          <input type="text" className="form-control" value={this.state.geo_lat} placeholder="Vĩ độ" onChange={this.onInputChange.bind(this, 'geo_lat')}/>
+          <input type="text" disabled className="form-control" value={this.state.geo_lat} placeholder="Vĩ độ" onChange={this.onInputChange.bind(this, 'geo_lat')}/>
         </div>
         <div className="form-group">
           <label>Kinh độ</label>
-          <input type="text" className="form-control" value={this.state.geo_lng} placeholder="Kinh độ" onChange={this.onInputChange.bind(this, 'geo_lng')}/>
+          <input type="text" disabled className="form-control" value={this.state.geo_lng} placeholder="Kinh độ" onChange={this.onInputChange.bind(this, 'geo_lng')}/>
         </div>
         <div className="form-group">
           <label>Số điện thoại</label>
