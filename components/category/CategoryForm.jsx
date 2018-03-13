@@ -4,8 +4,9 @@ import Promise from 'bluebird';
 import {connect} from 'react-redux';
 import {CategoryParentList} from 'components/category';
 import {Categories} from 'api';
-import {browserHistory} from 'react-router';
 import CONFIG from 'base/constants/config';
+import {SingleImageUploader} from 'components/uploader';
+import {withRouter} from 'react-router-dom';
 
 class CategoryForm extends React.Component {
   constructor(props, context) {
@@ -13,8 +14,10 @@ class CategoryForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      parent_id: null,
-      logo: null
+      parentId: null,
+      logo: null,
+      smallIcon: '',
+      largeIcon: ''
     }
   }
 
@@ -31,16 +34,18 @@ class CategoryForm extends React.Component {
     let data = {
       name: this.state.name,
       description: this.state.description,
-      parent_id: this.state.parent_id,
-      logo: this.state.logo
+      parentId: this.state.parentId,
+      logo: this.state.logo,
+      smallIcon: this.state.smallIcon,
+      largeIcon: this.state.largeIcon
     }
 
     if (typeof this.props.categoryId != "undefined") {
       params = {id: this.props.categoryId};
 
       // prevent self parenting
-      if (this.props.categoryId == data.parent_id) {
-        delete data.parent_id;
+      if (this.props.categoryId == data.parentId) {
+        delete data.parentId;
       }
     }
 
@@ -81,32 +86,9 @@ class CategoryForm extends React.Component {
     }
   }
 
-  handleFileUpload(e) {
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      // file load end
-      let data = new FormData();
-      data.append('fileUpload', file);
-
-      this.props.dispatch(
-        Categories.actions.uploadLogo({}, {
-          data: data
-        })
-      ).then(response => {
-        this.setState({
-          logo: response.data.name
-        })
-      }).catch(err => {
-        console.log(err);
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
   selectParent(id) {
     this.setState({
-      parent_id: id
+      parentId: id
     });
   }
 
@@ -116,52 +98,50 @@ class CategoryForm extends React.Component {
     })
   }
 
+  onUploadComplete(fieldName, image) {
+    this.setState({
+      [fieldName]: image.name
+    })
+  }
+
   render() {
-    let parentCategory = this.props.categoryHash[this.state.parent_id];
+    let parentCategory = this.props.categoryHash[this.state.parentId];
     return (
       <div>
         <div className="form-group">
           <label htmlFor="formCatName">Tên danh mục</label>
-          <input type="text" className="form-control" value={this.state.name} placeholder="Name" onChange={this.onInputChange.bind(this, 'name')}/>
+          <input type="text" className="form-control" value={this.state.name} placeholder="Tên" onChange={this.onInputChange.bind(this, 'name')}/>
         </div>
+
+        <div className="form-group">
+          <label htmlFor="formCatName">Classname của icon nhỏ:</label>
+          <input type="text" className="form-control" value={this.state.smallIcon} placeholder="Icon nhỏ" onChange={this.onInputChange.bind(this, 'smallIcon')}/>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="formCatName">Classname của icon lớn:</label>
+          <input type="text" className="form-control" value={this.state.largeIcon} placeholder="Icon lớn" onChange={this.onInputChange.bind(this, 'largeIcon')}/>
+        </div>
+
         <div className="form-group">
           <label htmlFor="formCatDescription">Mô tả</label>
-          <textarea className="form-control" placeholder="Description" onChange={this.onInputChange.bind(this, 'description')}
+          <textarea className="form-control" placeholder="Mô tả" onChange={this.onInputChange.bind(this, 'description')}
             value={this.state.description}
-            />
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList parentCategory={this.state.parent_id} onChange={this.selectParent.bind(this)}/>
+          <label htmlFor="exampleInputEmail1">Chọn danh mục cha:</label>
+          <CategoryParentList parentCategory={this.state.parentId} onChange={this.selectParent.bind(this)}/>
         </div>
-        <div className="form-group">
-          {
-            (() => {
-              let img = require('assets/images/placeholder-128.jpg');
 
-              if (this.state.logo) {
-                img = `${CONFIG.staticURL}/category-logos/${this.state.logo}`;
-              }
-
-              return (
-                <div>
-                  <img className="media-object" src={img} alt="..." width="64" height="64"/> [ <a href='javascript:void(0)' onClick={this.removeLogo.bind(this)}>Xóa</a> ]
-                </div>
-              )
-            })()
-          }
-          <label htmlFor="exampleInputFile">Tải lên logo danh mục</label>
-          <input ref='uploadFile' type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
-
-        </div>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
-            typeof this.props.categoryId == "undefined" ?
-            'Thêm danh mục'
-            : 'Cập nhật danh mục'
-          }</button>
+          typeof this.props.categoryId == "undefined" ?
+            'Thêm mới'
+          : 'Cập nhật'
+        }</button>
 
-        <button type='button' className="btn" onClick={() => browserHistory.push('/categories')}>Thoát</button>
+        <button type='button' className="btn" onClick={() => this.props.history.push('/categories')}>Thoát</button>
       </div>
     )
   }
@@ -178,4 +158,4 @@ CategoryForm.propTypes = {
   fnSubmit: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(CategoryForm);
+export default withRouter(connect(mapStateToProps)(CategoryForm));

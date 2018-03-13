@@ -1,8 +1,15 @@
 'use strict';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import {logout} from 'base/actions';
 
 export default class NavMenu extends React.Component {
-
+  handleLogout() {
+    this.props.dispatch(logout()).then(() => {
+      console.log('this');
+      this.props.history.push('/');
+    });
+  }
   render() {
     return (
       <nav className="user-menu-content">
@@ -25,7 +32,7 @@ export default class NavMenu extends React.Component {
               <span className="text">Edit Profile</span>
             </a>
           </li>
-          <li className="item">
+          <li className="item" onClick={this.handleLogout.bind(this)}>
             <a href="#" className="menu-link">
               <i className="icon-left nailicon-log-out"/>
               <span className="text">Log out</span>
@@ -38,4 +45,4 @@ export default class NavMenu extends React.Component {
 
 }
 
-export default NavMenu;
+export default withRouter(NavMenu);

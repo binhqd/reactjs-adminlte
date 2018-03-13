@@ -1,17 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import { Provider } from 'react-redux';
-import routes, {store} from 'base/routes/index.jsx';
+import {routes} from 'base/routes';
+import {store} from 'base/reducers';
 
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store);
+import {Root} from 'base/routes';
 
 ReactDOM.render((
-  <Provider store={store}>
-    <Router history={history} children={routes}>
-    </Router>
-  </Provider>
+  <Root routes={routes} store={store}/>
 ), document.getElementById('root'));

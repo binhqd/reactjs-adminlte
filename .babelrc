@@ -1,14 +1,15 @@
 {
-  "sourceMaps": true,
   "presets": [
-    ["es2015", { "modules": false }],
-    "stage-0"
+    "env",
+    "react"
   ],
   "plugins": [
-    "transform-async-to-generator",
-    "transform-decorators-legacy",
-    "transform-react-inline-elements",
-    "transform-react-constant-elements",
-    "transform-react-jsx"
+    "syntax-dynamic-import",
+    [
+      "transform-react-remove-prop-types",
+      {
+        "mode": "wrap"
+      }
+    ]
   ]
 }

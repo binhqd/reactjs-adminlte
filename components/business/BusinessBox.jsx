@@ -1,10 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {store} from 'base/routes';
 import {Businesses} from 'api';
-import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import CONFIG from 'base/constants/config';
+import {UploadImage} from 'components/UI/Image';
+import style from './_BusinessBox.scss';
 
 class BusinessBox extends React.Component {
   constructor(props, context) {
@@ -27,39 +28,39 @@ class BusinessBox extends React.Component {
   }
 
   render() {
-    let img = require('assets/images/placeholder-128.jpg');
-
+    let Img = null;
     if (this.props.data.logo) {
-      img = `${CONFIG.staticURL}/biz-logos/${this.props.data.logo}`;
+      Img = <UploadImage width={128} height={128} type='BUSINESS' image={this.props.data.logo} transform='crop'/>
+    } else {
+      Img = <img className="media-object" src={require('assets/images/placeholder-128.jpg')} alt="..." width="128" height="128"/>;
     }
 
     return (
       <div className="media">
         <h3>
           {this.props.data.name}
-
-          <Link to={`/businesses/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
-          <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          <div>
+            <Link to={`/businesses/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
+            <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          </div>
         </h3>
 
         {
           <div className="media-left media-middle">
-          <a href="#">
-            <img className="media-object" src={img} alt="..." width="64" height="64"/>
-          </a>
-        </div>
+            <a href="#">
+              {Img}
+            </a>
+          </div>
         }
         <div className="media-body">
-          <p>{this.props.data.description}</p>
-          {
-            (this.props.data.children && this.props.data.children.length > 0) ? (
-              this.props.data.children.map(item => {
-                return <BusinessBox key={item.id} data={item}/>;
-              })
-            )
 
-             : ''
-          }
+          <p>Email: {this.props.data.email}</p>
+          <p>Số Điện Thoại: {this.props.data.phone}</p>
+          <p>Địa chỉ: {this.props.data.address}</p>
+
+        </div>
+        <div className='action-panel'>
+          <Link to={`/business/${this.props.data.id}/products`}>Quản lý sản phẩm</Link>
         </div>
       </div>
     );

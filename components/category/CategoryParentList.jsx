@@ -72,7 +72,7 @@ CategoryParentList.propTypes = {
 }
 
 CategoryParentList.defaultProps = {
-  rootCatName: 'Danh mục gốc',
+  rootCatName: 'Root category',
   showAll: false
 }
 
