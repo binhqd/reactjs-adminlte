@@ -1,7 +1,19 @@
 {
-  "name": "biz-listing",
+  "name": "react-adminlte-components",
   "version": "0.0.1",
-  "description": "Biz Listing",
+  "description": "React Components that use AdminLTE theme",
+  "author": "Binh Quan <binhqd@gmail.com>",
+  "user": "binhqd",
+  "keywords": [
+    "react",
+    "reactjs",
+    "adminlte",
+    "admin lte"
+    "component",
+    "facebook",
+    "bootstrap",
+    "theme"
+  ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "build": "cross-env NODE_ENV=production webpack -p --progress --optimize-max-chunks 15 --optimize-min-chunk-size 10000 --env.prod=true",
@@ -17,9 +29,8 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/reactjs/redux/issues"
+    "url": "https://github.com/binhqd/reactjs-adminlte/issues"
   },
-  "homepage": "http://redux.js.org",
   "dependencies": {
     "admin-lte": "^2.3.11",
     "async": "^2.1.5",
