@@ -4,12 +4,11 @@ import Promise from 'bluebird';
 import {connect} from 'react-redux';
 import {Categories, Businesses} from 'api';
 import {CategoryParentList} from 'components/category';
-import {browserHistory} from 'react-router';
 import CONFIG from 'base/constants/config';
 import BizGallery from './BizGallery.jsx';
+import { withRouter } from 'react-router-dom';
 
 let styles = require('./styles.scss');
-let geocoder = new google.maps.Geocoder();
 
 class BusinessForm extends React.Component {
   constructor(props, context) {
@@ -110,26 +109,7 @@ class BusinessForm extends React.Component {
     let value = e.target ? e.target.value : e;
     this.onInputChange('address', e);
 
-    if (this.getGeoCodeTimeout) {
-      clearTimeout(this.getGeoCodeTimeout);
-    }
 
-    this.getGeoCodeTimeout = setTimeout(() => {
-      geocoder.geocode({
-        'address': value
-      }, (results, status) => {
-        console.log(results, status);
-          if (status == google.maps.GeocoderStatus.OK) {
-            console.log(results);
-            this.setState({
-              geo_lat: results[0].geometry.location.lat(),
-              geo_lng: results[0].geometry.location.lng()
-            })
-          } else {
-            // console.log(status);
-          }
-      });
-    }, 1000);
 
 
   }
@@ -151,31 +131,31 @@ class BusinessForm extends React.Component {
     return (
       <div>
         <div className="form-group">
-          <label>Tên doanh nghiệp</label>
-          <input type="text" className="form-control" value={this.state.name} placeholder="Tên" onChange={this.onInputChange.bind(this, 'name')}/>
+          <label>Name</label>
+          <input type="text" className="form-control" value={this.state.name} placeholder="Name" onChange={this.onInputChange.bind(this, 'name')}/>
         </div>
         <div className="form-group">
-          <label>Mô tả</label>
-          <textarea className="form-control" placeholder="Mô tả" onChange={this.onInputChange.bind(this, 'description')}
+          <label>Description</label>
+          <textarea className="form-control" placeholder="Description" onChange={this.onInputChange.bind(this, 'description')}
             value={this.state.description}
             />
         </div>
         <div className="form-group">
-          <label>Địa chỉ</label>
-          <input type="text" className="form-control" value={this.state.address} placeholder="Địa chỉ" onChange={this.onAddressChange.bind(this)}/>
+          <label>Address</label>
+          <input type="text" className="form-control" value={this.state.address} placeholder="Address" onChange={this.onAddressChange.bind(this)}/>
         </div>
 
         <div className="form-group">
-          <label>Vĩ độ</label>
-          <input type="text" disabled className="form-control" value={this.state.geo_lat} placeholder="Vĩ độ" onChange={this.onInputChange.bind(this, 'geo_lat')}/>
+          <label>Latitude</label>
+          <input type="text" disabled className="form-control" value={this.state.geo_lat} placeholder="Latitude" onChange={this.onInputChange.bind(this, 'geo_lat')}/>
         </div>
         <div className="form-group">
-          <label>Kinh độ</label>
-          <input type="text" disabled className="form-control" value={this.state.geo_lng} placeholder="Kinh độ" onChange={this.onInputChange.bind(this, 'geo_lng')}/>
+          <label>Longitude</label>
+          <input type="text" disabled className="form-control" value={this.state.geo_lng} placeholder="Longitude" onChange={this.onInputChange.bind(this, 'geo_lng')}/>
         </div>
         <div className="form-group">
-          <label>Số điện thoại</label>
-          <input type="text" className="form-control" value={this.state.phone} placeholder="Số điện thoại" onChange={this.onInputChange.bind(this, 'phone')}/>
+          <label>Phone</label>
+          <input type="text" className="form-control" value={this.state.phone} placeholder="Phone" onChange={this.onInputChange.bind(this, 'phone')}/>
         </div>
         <div className="form-group">
           <label>Fax</label>
@@ -187,7 +167,7 @@ class BusinessForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
+          <label htmlFor="exampleInputEmail1">Select category:</label>
           <CategoryParentList showAll={true} parentCategory={this.state.category_id} onChange={this.selectCategory.bind(this)}/>
         </div>
 
@@ -202,24 +182,24 @@ class BusinessForm extends React.Component {
 
               return (
                 <div>
-                  <img className="media-object" src={img} alt="..." width="128" height="128"/> [ <a href='javascript:void(0)' onClick={this.removeLogo.bind(this)}>Xóa</a> ]
+                  <img className="media-object" src={img} alt="..." width="128" height="128"/> [ <a href='javascript:void(0)' onClick={this.removeLogo.bind(this)}>Remove</a> ]
                 </div>
               )
             })()
           }
-          <label>Tải lên logo doanh nghiệp</label>
+          <label>Upload business logo</label>
           <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
         </div>
 
-        <BizGallery label="Hình doanh nghiệp" images={this.state.images} uploadFunc={Businesses.actions.uploadImage.request} onChange={this.onGalleryChange.bind(this)}/>
+        <BizGallery label="Business Image" images={this.state.images} uploadFunc={Businesses.actions.uploadImage.request} onChange={this.onGalleryChange.bind(this)}/>
 
         <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
             typeof this.props.businessId == "undefined" ?
-            'Thêm doanh nghiệp'
-            : 'Cập nhật doanh nghiệp'
+            'Add new business'
+            : 'Update business'
           }</button>
 
-        <button type='button' className="btn" onClick={() => browserHistory.push('/businesses')}>Thoát</button>
+        <button type='button' className="btn" onClick={() => this.props.history.push('/businesses')}>Cancel</button>
       </div>
     )
   }
@@ -235,4 +215,4 @@ BusinessForm.propTypes = {
   fnSubmit: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(BusinessForm);
+export default withRouter(connect(mapStateToProps)(BusinessForm));

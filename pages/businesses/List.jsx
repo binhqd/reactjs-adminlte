@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {MainLayout} from 'components/layouts';
 import {BusinessList} from 'components/business';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 class ListCategories extends React.Component {
   constructor(props, context) {
@@ -12,9 +12,8 @@ class ListCategories extends React.Component {
     return (
       <MainLayout>
         <div>
-          <h1>Doanh nghiệp</h1>
-          [ <Link to="businesses/add">Thêm mới doanh nghiệp</Link>]
-          <BusinessList/>
+          <h1>Quản lý thông tin doanh nghiệp</h1>
+          <BusinessList status='APPROVED'/>
         </div>
       </MainLayout>
     );

@@ -42,7 +42,7 @@ const rest = reduxApi({
       }
     }
   },
-  uploadLogo: {
+  upload: {
     url: 'categories/uploadLogo',
     options: {
       method: "POST"

@@ -251,7 +251,7 @@ module.exports = function (env) {
     optimization: {
       minimize: false,
       runtimeChunk: {
-        name: 'vendor'
+        name: 'vendor123'
       },
       splitChunks: {
         cacheGroups: {

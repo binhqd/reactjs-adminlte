@@ -2,7 +2,8 @@ import reduxApi, {transformers} from 'redux-api';
 import customFetch from 'api/axios';
 import CONFIG from 'base/constants/config';
 
-const limit = 20;
+const limit = 50;
+const order = 'createdAt DESC';
 
 // Example
 const rest = reduxApi({
@@ -21,17 +22,7 @@ const rest = reduxApi({
     }
   },
   list: {
-    url: `promotions?filter[limit]=${limit}`,
-    options:(url, params, getState) => {
-      return {
-        method: "GET",
-        headers: {},
-        data: {}
-      };
-    }
-  },
-  filterByCat: {
-    url: `promotions?filter[where][category_id][regexp]=^(:catID)&filter[where][title][regexp]=(:title)&filter[limit]=${limit}`,
+    url: `promotions?filter[limit]=${limit}&filter[order]=${order}`,
     options:(url, params, getState) => {
       return {
         method: "GET",
@@ -60,8 +51,8 @@ const rest = reduxApi({
       }
     }
   },
-  uploadBanner: {
-    url: 'promotions/uploadBanner',
+  upload: {
+    url: 'containers/promotions/upload',
     options: {
       method: "POST"
     }

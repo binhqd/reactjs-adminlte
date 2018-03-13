@@ -2,7 +2,8 @@ import React from 'react';
 import {MainLayout} from 'components/layouts';
 import {CategoryForm} from 'components/category';
 import {Categories} from 'base/api';
-import { browserHistory } from 'react-router'
+import {toastr} from 'react-redux-toastr';
+import { withRouter } from 'react-router-dom';
 
 class EditCategory extends React.Component {
   constructor(props, context) {
@@ -12,19 +13,21 @@ class EditCategory extends React.Component {
 
   cb(response) {
     // Back to categories list
-    browserHistory.push('/categories');
+    toastr.success('Thành công!', 'Danh mục đã được cập nhật thành công.');
+
+    this.props.history.push('/categories');
   }
 
   render() {
     return (
       <MainLayout>
         <div>
-          Edit Category
-          <CategoryForm fnSubmit={Categories.actions.update} cb={this.cb.bind(this)} categoryId={this.props.params.id}/>
+          Cập nhật danh mục
+          <CategoryForm fnSubmit={Categories.actions.update} cb={this.cb.bind(this)} categoryId={this.props.match.params.id}/>
         </div>
       </MainLayout>
     );
   }
 }
 
-export default EditCategory;
+export default withRouter(EditCategory);

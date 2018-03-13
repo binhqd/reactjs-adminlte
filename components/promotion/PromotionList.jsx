@@ -3,50 +3,77 @@ import React from 'react';
 import {PromotionBox} from 'components/promotion';
 import {connect} from 'react-redux';
 import {Promotions} from 'base/api';
-import {CategoryParentList} from 'components/category';
+import {toastr} from 'react-redux-toastr';
 
 class PromotionList extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-
+      listPromotions: [],
+      items: {}
     }
+  }
 
+  loadPromotions() {
     Promotions.actions.list.request().then(response => {
-      this.props.dispatch({
-        type: 'UPDATE_PROMOTION_LIST',
-        promotions: response.data
+      let itemKeys = {};
+      response.data.map(item => {
+        itemKeys[item.id] = item;
+      });
+
+      this.setState({
+        listPromotions: response.data,
+        items: itemKeys
       })
     });
   }
 
-  handleFilter(catID) {
-    this.setState({
-      selectedCatID: catID
-    });
+  componentDidMount() {
+    this.loadPromotions();
+  }
 
-    if (!catID){
-      catID = ".*";
-    }
-    Promotions.actions.filterByCat.request({catID: catID}).then(response => {
-      this.props.dispatch({
-        type: 'UPDATE_PROMOTION_LIST',
-        promotions: response.data
-      })
+  afterDelete() {
+    toastr.removeByType("success");
+    toastr.success("", "Xóa thành công")
+    this.loadPromotions();
+  }
+
+  updateField(item, fieldName, e) {
+    Promotions.actions.update.request({id: item.id}, {
+      data: {
+        [fieldName]: !item[fieldName]
+      }
+    }).then(response => {
+      Promotions.actions.approve.request({id: item.id}).then(end => {
+        toastr.removeByType('success');
+        toastr.success("Thành công", "Trạng thái của tin khuyến mãi đã được cập nhật thành công");
+
+        this.setState({
+          items: {
+            ...this.state.items,
+            [this.state.items[item.id].id]: {
+              ...this.state.items[item.id],
+              [fieldName]: !this.state.items[item.id][fieldName]
+            }
+          }
+        });
+      });
     })
   }
 
   render() {
     return (
-      <div>
-        <div className="form-group">
-          <label>Lọc khuyến mãi theo danh mục:</label>
-          <CategoryParentList rootCatName='Tất cả lĩnh vực' parentCategory={this.state.selectedCatID} showAll={true} onChange={this.handleFilter.bind(this)}/>
-        </div>
+      <div className='container-fluid'>
         {
-          this.props.listPromotions.map(promotion => {
-            return <PromotionBox key={promotion.id} data={promotion}/>;
+          this.state.listPromotions.map(promotion => {
+            return (
+              <div className='col-lg-5'>
+                <PromotionBox key={promotion.id} data={promotion}
+                  deleteCallBack={this.afterDelete.bind(this)}/>
+
+              </div>
+            );
           })
         }
       </div>
@@ -54,10 +81,4 @@ class PromotionList extends React.Component {
   }
 }
 
-const mapStateToProps = function(state) {
-  return {
-    listPromotions: state.listPromotions
-  };
-}
-
-export default connect(mapStateToProps)(PromotionList);
+export default connect()(PromotionList);

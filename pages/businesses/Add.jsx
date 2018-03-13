@@ -1,8 +1,8 @@
 import React from 'react';
 import {MainLayout} from 'components/layouts';
-import {BusinessForm} from 'components/business';
+import BusinessForm from 'components/business/BusinessForm.v2.jsx';
 import {Businesses} from 'base/api';
-import { browserHistory } from 'react-router'
+import { withRouter } from 'react-router-dom';
 
 class AddBusiness extends React.Component {
   constructor(props, context) {
@@ -11,14 +11,16 @@ class AddBusiness extends React.Component {
   }
   cb(response) {
     // Back to businesses list
-    browserHistory.push('/businesses');
+    this.props.history.push('/businesses');
   }
 
   render() {
     return (
       <MainLayout>
         <div>
-          Thêm Mới Doanh Nghiệp
+          <div className="register-logo">
+            <b>Thêm thông tin doanh nghiệp</b>
+          </div>
           <BusinessForm fnSubmit={Businesses.actions.add} cb={this.cb.bind(this)}/>
         </div>
       </MainLayout>
@@ -26,4 +28,4 @@ class AddBusiness extends React.Component {
   }
 }
 
-export default AddBusiness;
+export default withRouter(AddBusiness);

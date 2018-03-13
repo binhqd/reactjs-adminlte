@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {MainLayout} from 'components/layouts';
 import {PromotionList} from 'components/promotion';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 class ListPromotions extends React.Component {
   constructor(props, context) {
@@ -12,11 +12,11 @@ class ListPromotions extends React.Component {
     return (
       <MainLayout>
         <div>
-          <h1>Khuyến mãi</h1>
-          [ <Link to="/promotions/add">Thêm mới tin khuyến mãi</Link>]
+          <h1>Quản lý Tin Khuyến Mãi</h1>
+          [ <Link to="promotions/add">Thêm Khuyến Mãi mới</Link>]
           <PromotionList/>
         </div>
-      </MainLayout> 
+      </MainLayout>
     );
   }
 }

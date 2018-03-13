@@ -16,6 +16,6 @@ Root.propTypes = {
   store: PropTypes.object.isRequired,
   history: PropTypes.object,
   routes: PropTypes.array.isRequired
-};
+}
 
 export default Root;

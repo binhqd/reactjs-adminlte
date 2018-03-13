@@ -2,39 +2,48 @@ import React from 'react';
 import {PropTypes} from 'prop-types';
 import Promise from 'bluebird';
 import {connect} from 'react-redux';
-import {Categories, Promotions} from 'api';
-import {CategoryParentList} from 'components/category';
-import {browserHistory} from 'react-router';
+import {Promotions} from 'api';
+import {SingleImageUploader} from 'components/uploader';
 import CONFIG from 'base/constants/config';
+import {ShowIf} from 'components/utils'
 
-class PromotionForm extends React.Component {
+class BusinessForm extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      title: '',
-      description: '',
-      business_id: '',
-      category_id: '',
-      banner: '',
-      expiry_date: new Date()
+      "title": "",
+      "description": "",
+      "image": "",
+      "link": ""
     }
   }
 
-  onInputChange(name, e) {
+  bindData(data) {
+    const {title, description, image, link} = data;
+
     this.setState({
-      [name]: typeof e.target != "undefined" ? e.target.value : e
+      title, description, image, link
+    })
+  }
+
+  onInputChange(name, e) {
+    let value = e.target ? e.target.value : e;
+    this.setState({
+      [name]: value
     })
   }
 
   submitForm(e) {
+    e.preventDefault();
+
     let params = {};
 
     let data = {
       ...this.state
     }
 
-    if (typeof this.props.promotionId != "undefined") {
-      params = {id: this.props.promotionId};
+    if (this.props.data && typeof this.props.data.id != "undefined") {
+      params = {id: this.props.data.id};
     }
 
     return this.props.dispatch(this.props.fnSubmit(params, {
@@ -42,7 +51,7 @@ class PromotionForm extends React.Component {
     }))
       .then(response => {
         // reload list
-        this.props.dispatch(Promotions.actions.list());
+        // this.props.dispatch(Promotions.actions.list());
 
         if (typeof this.props.cb == 'function') {
           this.props.cb(response);
@@ -56,87 +65,65 @@ class PromotionForm extends React.Component {
   }
 
   componentDidMount() {
-    // get promotion info
-    if (this.props.promotionId) {
-      this.props.dispatch(Promotions.actions.get({id: this.props.promotionId})).then(res => {
-        this.setState({
-          ...res.data
-        });
-      })
+    if (this.props.data) {
+      this.bindData(this.props.data)
     }
-
   }
 
-  handleFileUpload(e) {
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      // file load end
-      let data = new FormData();
-      data.append('fileUpload', file);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data != this.state.data) {
+      this.bindData(nextProps.data);
+    }
+  }
 
-      this.props.dispatch(
-        Promotions.actions.uploadBanner({}, {
-          data: data
-        })
-      ).then(response => {
-        this.setState({
-          banner: response.data
-        })
-      }).catch(err => {
-        console.log(err);
-      });
-    };
-    reader.readAsDataURL(file);
+  onUploadComplete(image) {
+    this.setState({
+      image: image.name
+    })
+  }
+
+  onRemoveImage() {
+    this.setState({
+      image: ''
+    })
   }
 
   render() {
 
     return (
       <div>
-        <div className="form-group">
-          <label>Tiêu đề</label>
-          <input type="text" className="form-control" value={this.state.title} placeholder="Tiêu đề" onChange={this.onInputChange.bind(this, 'title')}/>
-        </div>
-        <div className="form-group">
-          <label>Mô tả</label>
-          <textarea className="form-control" placeholder="Mô tả" onChange={this.onInputChange.bind(this, 'description')}
-            value={this.state.description}
+        <form onSubmit={this.submitForm.bind(this)}>
+          <div className="form-group">
+            <label>Tiêu đề</label>
+            <input type="text" className="form-control" value={this.state.title} placeholder="Tiêu đề" onChange={this.onInputChange.bind(this, 'title')}/>
+          </div>
+          <SingleImageUploader fnUpload={Promotions.actions.upload.request}
+            onUploadComplete={this.onUploadComplete.bind(this)}
+            image={this.state.image}
+            onRemoveImage={this.onRemoveImage.bind(this)}
+            type='PROMOTION'
+          />
+          <div className="form-group">
+            <label>Mô tả</label>
+            <textarea className="form-control" placeholder="Mô tả" onChange={this.onInputChange.bind(this, 'description')}
+              value={this.state.description}
             />
-        </div>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Chọn lĩnh vực/danh mục:</label>
-          <CategoryParentList showAll={true} parentCategory={this.state.category_id} onChange={this.onInputChange.bind(this, 'category_id')}/>
-        </div>
-        <div className="form-group">
-          {
-            (() => {
-              let img = require('assets/images/placeholder-128.jpg');
+          <div className="form-group">
+            <label>Liên kết</label>
+            <input type="text" className="form-control" value={this.state.link} placeholder="http://" onChange={this.onInputChange.bind(this, 'link')}/>
+          </div>
 
-              if (this.state.banner) {
-                img = `${CONFIG.staticURL}/promotion-banners/${this.state.banner.name}`;
-              }
+          <ShowIf condition={this.props.data}>
+            <button type="submit" className="btn btn-primary btn-submit text-btn">Cập nhật tin</button>
+          </ShowIf>
+          <ShowIf condition={!this.props.data}>
+            <button type="submit" className="btn btn-primary btn-submit text-btn">Thêm tin khuyến mãi</button>
+          </ShowIf>
 
-              return (
-                <div>
-                  <img className="media-object" src={img} alt="..." width="128" height="128"/>
-                </div>
-              )
-            })()
-          }
-          <label htmlFor="exampleInputFile">Tải lên banner khuyến mãi</label>
-          <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
-
-        </div>
-
-        <button type="submit" className="btn btn-primary" onClick={this.submitForm.bind(this)}>{
-            typeof this.props.promotionId == "undefined" ?
-            'Thêm tin khuyến mãi'
-            : 'Cập nhật tin khuyến mãi'
-          }</button>
-
-        <button type='button' className="btn" onClick={() => browserHistory.push('/promotions')}>Thoát</button>
+          <button type='button' className="btn" onClick={() => this.props.history.push('/promotions')}>Thoát</button>
+        </form>
       </div>
     )
   }
@@ -144,12 +131,16 @@ class PromotionForm extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    categoriesAsTree: state.categoriesAsTree
+
   }
 }
 
-PromotionForm.propTypes = {
+BusinessForm.propTypes = {
   fnSubmit: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(PromotionForm);
+BusinessForm.contextTypes = {
+  router: React.PropTypes.object
+};
+
+export default connect(mapStateToProps)(BusinessForm);

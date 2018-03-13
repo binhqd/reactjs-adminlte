@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {store} from 'base/routes';
+import {Link} from 'react-router-dom';
+import {store} from 'base/reducers';
 import {Categories} from 'api';
 import CONFIG from 'base/constants/config';
 
@@ -10,7 +10,7 @@ class CategoryBox extends React.Component {
   }
 
   handleDelete(catID, e) {
-    if (confirm("Bạn có muốn xóa danh mục này?")) {
+    if (confirm("Bạn có muốn xóa danh mục này không? Sau khi xóa, các sản phẩm và doanh nghiệp thuộc về  danh mục này sẽ không truy cập được")) {
       store.dispatch(Categories.actions.delete({ id: catID })).then(response => {
         // store.dispatch({
         //   type: 'REMOVE_CATEGORY',
@@ -19,6 +19,10 @@ class CategoryBox extends React.Component {
         store.dispatch(Categories.actions.list());
       });
     }
+  }
+
+  goEdit(id) {
+    this.props.history.push(`/categories/edit/${id}`);
   }
 
   render() {
@@ -30,16 +34,11 @@ class CategoryBox extends React.Component {
 
     return (
       <div className="media">
-        <h3>{this.props.data.name}
+        <h4>{this.props.data.name}
           <Link to={`/categories/edit/${this.props.data.id}`} className="btn-actions"><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link> &nbsp;
-          <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a></h3>
-        {
-          <div className="media-left media-middle">
-          <a href="#">
-            <img className="media-object" src={img} alt="..." width="64" height="64"/>
-          </a>
-        </div>
-        }
+          <a onClick={this.handleDelete.bind(this, this.props.data.id)} className="btn-actions"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+        </h4>
+
         <div className="media-body">
           <p>{this.props.data.description}</p>
         </div>

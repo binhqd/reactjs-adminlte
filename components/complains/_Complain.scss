@@ -1,0 +1,131 @@
+.product {
+  padding: 5px 15px;
+  .wrap-img {
+    height: 127px;
+    position: relative;
+    margin-bottom: 10px;
+    img {
+      max-width: 100%;
+      max-height :100%;
+      height: auto;
+      width: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+  }
+  .product-image {
+    max-width: 100%;
+    max-height :100%;
+    height: auto;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  .name,
+  .name-link {
+    height: 48px;
+    color: #333333;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .name-link {
+    cursor: pointer;
+  }
+  .price {
+    height: 23px;
+    color: #333333;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 23px;
+    overflow: hidden;
+  }
+  .price-sale {
+    color: #ED3237;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 23px;
+    margin-bottom: 5px;
+  }
+  .price-old {
+    color: #333333;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    .price-throught {
+      text-decoration: line-through;
+    }
+    .sale-percent {
+      color: #ED3237;
+      margin-left: 5px;
+    }
+  }
+  .description {
+    height: 40px;
+    color: #666666;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 20px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .company-name {
+    height: 40px;
+    color: #666666;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 20px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .send-request {
+    padding: 10px 30px;
+    border: 1px solid #C3C3C3;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    color: #494949;
+    font-size: 13px;
+    display: inline-block;
+    &:hover {
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+    }
+  }
+  .add-to-cart {
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15px;
+    border: none;
+    outline: none;
+    padding: 8px 25px 9px;
+    border-radius: 3px;
+    background-color: #ED3237;
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover {
+      background-color: #CE2126;
+    }
+    i {
+      margin-right: 10px;
+      font-size: 18px;
+      position: relative;
+      top: 1px;
+    }
+  }
+}

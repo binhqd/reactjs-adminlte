@@ -79,7 +79,7 @@ class BizGallery extends React.Component {
 
         </div>
         <div className="form-group">
-          <label>Tải lên hình doanh nghiệp</label>
+          <label>Upload business images</label>
           <input type="file" className="form-control-file" aria-describedby="fileHelp" onChange={this.handleFileUpload.bind(this)}/>
         </div>
       </div>
