@@ -121,24 +121,6 @@ module.exports = function (env) {
       new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: false
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-          warnings: false,
-          screw_ie8: true,
-          conditionals: true,
-          unused: true,
-          comparisons: true,
-          sequences: true,
-          dead_code: true,
-          evaluate: true,
-          if_return: true,
-          join_vars: true
-        },
-        output: {
-          comments: false
-        }
       })
     );
   } else {
@@ -251,18 +233,7 @@ module.exports = function (env) {
     optimization: {
       minimize: false,
       runtimeChunk: {
-        name: 'vendor123'
-      },
-      splitChunks: {
-        cacheGroups: {
-          default: false,
-          commons: {
-            test: /node_modules/,
-            name: 'vendor',
-            chunks: 'initial',
-            minSize: 1
-          }
-        }
+        name: 'vendor'
       }
     },
     performance: isProd && {
